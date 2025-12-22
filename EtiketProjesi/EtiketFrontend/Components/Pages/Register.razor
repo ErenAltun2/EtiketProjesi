@@ -1,0 +1,109 @@
+﻿@page "/register"
+@inject UserApiService UserApi
+@inject NavigationManager NavManager
+@rendermode InteractiveServer
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">📝 Kayıt Ol</h4>
+                </div>
+                <div class="card-body">
+
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="alert alert-danger">@ErrorMessage</div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(SuccessMessage))
+                    {
+                        <div class="alert alert-success">@SuccessMessage</div>
+                    }
+
+                    <EditForm Model="registerDto" OnValidSubmit="HandleRegister" FormName="KayitFormu">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">İsim</label>
+                                <InputText @bind-Value="registerDto.Isim" class="form-control" placeholder="Adınız" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Soyisim</label>
+                                <InputText @bind-Value="registerDto.Soyisim" class="form-control" placeholder="Soyadınız" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <InputText @bind-Value="registerDto.Email" class="form-control" placeholder="ornek@email.com" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Telefon</label>
+                            <InputText @bind-Value="registerDto.TelNo" class="form-control" placeholder="05XX XXX XX XX" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Şifre</label>
+                            <InputText @bind-Value="registerDto.Password" type="password" class="form-control" placeholder="••••••••" />
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100" disabled="@isLoading">
+                            @if (isLoading)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                                <text>Kaydediliyor...</text>
+                            }
+                            else
+                            {
+                                <text>Kayıt Ol</text>
+                            }
+                        </button>
+                    </EditForm>
+
+                    <hr />
+                    <p class="text-center mb-0">
+                        Zaten hesabın var mı? <a href="/login">Giriş Yap</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private RegisterDto registerDto = new RegisterDto();
+    private string ErrorMessage = string.Empty;
+    private string SuccessMessage = string.Empty;
+    private bool isLoading = false;
+
+    private async Task HandleRegister()
+    {
+        ErrorMessage = string.Empty;
+        SuccessMessage = string.Empty;
+        isLoading = true;
+
+        try
+        {
+            var result = await UserApi.Register(registerDto);
+
+            if (result != null)
+            {
+                SuccessMessage = "Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...";
+
+                // 2 saniye bekle ve login'e yönlendir
+                await Task.Delay(2000);
+                NavManager.NavigateTo("/login");
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

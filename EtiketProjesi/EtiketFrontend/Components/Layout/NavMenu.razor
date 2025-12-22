@@ -1,0 +1,78 @@
+﻿@using EtiketFrontend.Authentication
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavManager
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">🏷️ YOLO Etiket</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Ana Sayfa
+            </NavLink>
+        </div>
+
+        <AuthorizeView>
+            <Authorized>
+                @* --- Sadece Giriş Yapmış Kullanıcılar --- *@
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="proje-olustur">
+                        <span class="bi bi-folder-plus-nav-menu" aria-hidden="true"></span> Proje Oluştur
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="kod-ile-ac">
+                        <span class="bi bi-key-fill-nav-menu" aria-hidden="true"></span> Kod ile Aç
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="export">
+                        <span class="bi bi-box-seam-fill-nav-menu" aria-hidden="true"></span> Dataset İndir
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3 mt-4">
+                    <NavLink class="nav-link text-danger" style="cursor: pointer" @onclick="Logout">
+                        <span class="bi bi-box-arrow-right-nav-menu" aria-hidden="true"></span> Çıkış Yap
+                    </NavLink>
+                </div>
+            </Authorized>
+
+            <NotAuthorized>
+                @* --- Giriş Yapmamış Kullanıcılar --- *@
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="login">
+                        <span class="bi bi-box-arrow-in-right-nav-menu" aria-hidden="true"></span> Giriş Yap
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="register">
+                        <span class="bi bi-person-plus-fill-nav-menu" aria-hidden="true"></span> Kayıt Ol
+                    </NavLink>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
+
+    </nav>
+</div>
+
+@code {
+    private async Task Logout()
+    {
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(null);
+        NavManager.NavigateTo("/", true);
+    }
+}

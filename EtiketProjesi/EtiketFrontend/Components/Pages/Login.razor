@@ -1,0 +1,111 @@
+﻿@page "/login"
+@using ClassLibrary;
+@inject UserApiService UserApi
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavManager
+@rendermode InteractiveServer
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">🔐 Giriş Yap</h4>
+                </div>
+                <div class="card-body">
+
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle"></i> @ErrorMessage
+                        </div>
+                    }
+
+                    <EditForm Model="loginDto" OnValidSubmit="HandleLogin" FormName="GirisFormu">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <InputText @bind-Value="loginDto.Email" class="form-control" placeholder="ornek@email.com" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Şifre</label>
+                            <InputText @bind-Value="loginDto.Password" type="password" class="form-control" placeholder="••••••••" />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" disabled="@isLoading">
+                            @if (isLoading)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                                <text>Giriş Yapılıyor...</text>
+                            }
+                            else
+                            {
+                                <text>Giriş Yap</text>
+                            }
+                        </button>
+                    </EditForm>
+
+                    <hr />
+                    <p class="text-center mb-0">
+                        Hesabın yok mu? <a href="/register">Kayıt Ol</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoginDto loginDto = new LoginDto();
+    private string ErrorMessage = string.Empty;
+    private bool isLoading = false;
+
+    private async Task HandleLogin()
+    {
+        ErrorMessage = string.Empty;
+        isLoading = true;
+
+        // Login işlemi başarılı olursa true yapacağız
+        bool loginSuccessful = false;
+
+        try
+        {
+            // 1. API'den veriyi DTO olarak al (result artık LoginResponseDto tipinde)
+            var result = await UserApi.Login(loginDto);
+
+            if (result != null)
+            {
+                var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
+
+                // 2. DTO'dan Session Modeline aktar (Çeviri burada yapılıyor)
+                await customAuthStateProvider.UpdateAuthenticationState(new UserSession
+                    {
+                        UserId = result.userId.ToString(), // İŞTE ÇÖZÜM: int -> string çevirisi
+                        Email = result.email,
+                        Isim = result.isim,
+                        Soyisim = result.soyisim,
+                        Role = result.role ?? "User"
+                    });
+
+                loginSuccessful = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = "Giriş başarısız: " + ex.Message;
+        }
+        finally
+        {
+            // Eğer giriş başarılıysa loading'i kapatma, sayfa donmasın, direkt yönlensin.
+            // Sadece hata aldıysak butonu tekrar aktif et.
+            if (!loginSuccessful)
+            {
+                isLoading = false;
+            }
+        }
+
+        // Yönlendirmeyi en sonda yapıyoruz (Disposed hatasını önlemek için)
+        if (loginSuccessful)
+        {
+            NavManager.NavigateTo("/");
+        }
+    }
+}

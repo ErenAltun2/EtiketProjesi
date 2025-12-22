@@ -1,0 +1,421 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|c:\\users\\excalibur\\desktop\\etiketproje\\etiketprojesi\\etiketfrontend\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketfrontend\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketfrontend\\components\\pages\\etiketleme.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\components\\pages\\etiketleme.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketfrontend\\services\\imageapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\services\\imageapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketfrontend\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketfrontend\\components\\pages\\resimler.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\components\\pages\\resimler.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketfrontend\\components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketfrontend\\components\\pages\\projeolustur.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\components\\pages\\projeolustur.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketfrontend\\components\\pages\\kodileac.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\components\\pages\\kodileac.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketfrontend\\components\\pages\\export.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\components\\pages\\export.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketfrontend\\services\\userapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\services\\userapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\classlibrary\\registerresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|solutionrelative:classlibrary\\registerresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\classlibrary\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|solutionrelative:classlibrary\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\classlibrary\\loginresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|solutionrelative:classlibrary\\loginresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\classlibrary\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|solutionrelative:classlibrary\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\classlibrary\\etiketresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|solutionrelative:classlibrary\\etiketresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\classlibrary\\etiketekledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|solutionrelative:classlibrary\\etiketekledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketfrontend\\components\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\components\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketfrontend\\services\\etiketapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D75457B-5EA9-4092-8D8E-64EAC7C5CA7F}|EtiketFrontend\\EtiketFrontend.csproj|solutionrelative:etiketfrontend\\services\\etiketapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\classlibrary\\imageslistresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|solutionrelative:classlibrary\\imageslistresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\classlibrary\\imageresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|solutionrelative:classlibrary\\imageresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\classlibrary\\createimagesetresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|solutionrelative:classlibrary\\createimagesetresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\classlibrary\\createimagesetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCBB751-A023-4B5A-A9E3-F236536FC0EA}|ClassLibrary\\ClassLibrary.csproj|solutionrelative:classlibrary\\createimagesetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{88CF854C-CD55-4C1F-AC50-7776EB459855}|EtiketAPI\\EtiketAPI.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketapi\\services\\imageservis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{88CF854C-CD55-4C1F-AC50-7776EB459855}|EtiketAPI\\EtiketAPI.csproj|solutionrelative:etiketapi\\services\\imageservis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{88CF854C-CD55-4C1F-AC50-7776EB459855}|EtiketAPI\\EtiketAPI.csproj|C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\etiketapi\\controllers\\imagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{88CF854C-CD55-4C1F-AC50-7776EB459855}|EtiketAPI\\EtiketAPI.csproj|solutionrelative:etiketapi\\controllers\\imagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Components\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "EtiketFrontend\\Components\\Layout\\MainLayout.razor",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAACAAAABUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T21:17:52.977Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Components\\Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "EtiketFrontend\\Components\\Layout\\NavMenu.razor",
+              "ViewState": "AQIAACwAAAAAAAAAAAAQwE0AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T21:17:19.005Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Login.razor",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Components\\Pages\\Login.razor",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\Login.razor",
+              "RelativeToolTip": "EtiketFrontend\\Components\\Pages\\Login.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAGoAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T20:43:27.323Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UserApiService.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Services\\UserApiService.cs",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Services\\UserApiService.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Services\\UserApiService.cs",
+              "RelativeToolTip": "EtiketFrontend\\Services\\UserApiService.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAQwCEAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T20:40:22.845Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "EtiketEkleDto.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\EtiketEkleDto.cs",
+              "RelativeDocumentMoniker": "ClassLibrary\\EtiketEkleDto.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\EtiketEkleDto.cs",
+              "RelativeToolTip": "ClassLibrary\\EtiketEkleDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T20:38:28.793Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "RegisterResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\RegisterResponseDto.cs",
+              "RelativeDocumentMoniker": "ClassLibrary\\RegisterResponseDto.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\RegisterResponseDto.cs",
+              "RelativeToolTip": "ClassLibrary\\RegisterResponseDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T20:37:15.986Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Components\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\Home.razor",
+              "RelativeToolTip": "EtiketFrontend\\Components\\Pages\\Home.razor",
+              "ViewState": "AQIAAHwBAAAAAAAAAAAUwJoBAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T15:23:50.12Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Resimler.razor",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\Resimler.razor",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Components\\Pages\\Resimler.razor",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\Resimler.razor",
+              "RelativeToolTip": "EtiketFrontend\\Components\\Pages\\Resimler.razor",
+              "ViewState": "AQIAAIEAAAAAAAAAAAAuwJUAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T16:27:23.951Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Etiketleme.razor",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\Etiketleme.razor",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Components\\Pages\\Etiketleme.razor",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\Etiketleme.razor",
+              "RelativeToolTip": "EtiketFrontend\\Components\\Pages\\Etiketleme.razor",
+              "ViewState": "AQIAAIABAAAAAAAAAAAQwKEBAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T16:27:34.35Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ImageApiService.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Services\\ImageApiService.cs",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Services\\ImageApiService.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Services\\ImageApiService.cs",
+              "RelativeToolTip": "EtiketFrontend\\Services\\ImageApiService.cs",
+              "ViewState": "AQIAAF8AAAAAAAAAAADwv3EAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T15:38:07.113Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ProjeOlustur.razor",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\ProjeOlustur.razor",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Components\\Pages\\ProjeOlustur.razor",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\ProjeOlustur.razor",
+              "RelativeToolTip": "EtiketFrontend\\Components\\Pages\\ProjeOlustur.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T20:43:33.153Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Export.razor",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\Export.razor",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Components\\Pages\\Export.razor",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\Export.razor",
+              "RelativeToolTip": "EtiketFrontend\\Components\\Pages\\Export.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T20:44:08.533Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "KodIleAc.razor",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\KodIleAc.razor",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Components\\Pages\\KodIleAc.razor",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\KodIleAc.razor",
+              "RelativeToolTip": "EtiketFrontend\\Components\\Pages\\KodIleAc.razor",
+              "ViewState": "AQIAAHsAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T20:44:11.736Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LoginDto.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\LoginDto.cs",
+              "RelativeDocumentMoniker": "ClassLibrary\\LoginDto.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\LoginDto.cs",
+              "RelativeToolTip": "ClassLibrary\\LoginDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T20:39:19.302Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "LoginResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\LoginResponseDto.cs",
+              "RelativeDocumentMoniker": "ClassLibrary\\LoginResponseDto.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\LoginResponseDto.cs",
+              "RelativeToolTip": "ClassLibrary\\LoginResponseDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T20:39:23.701Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Register.razor",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\Register.razor",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Components\\Pages\\Register.razor",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Components\\Pages\\Register.razor",
+              "RelativeToolTip": "EtiketFrontend\\Components\\Pages\\Register.razor",
+              "ViewState": "AQIAAEUAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T20:36:13.753Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "EtiketApiService.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Services\\EtiketApiService.cs",
+              "RelativeDocumentMoniker": "EtiketFrontend\\Services\\EtiketApiService.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\Services\\EtiketApiService.cs",
+              "RelativeToolTip": "EtiketFrontend\\Services\\EtiketApiService.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAiwDsAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T16:46:34.566Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "RegisterDto.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\RegisterDto.cs",
+              "RelativeDocumentMoniker": "ClassLibrary\\RegisterDto.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\RegisterDto.cs",
+              "RelativeToolTip": "ClassLibrary\\RegisterDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T20:39:38.681Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "EtiketResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\EtiketResponseDto.cs",
+              "RelativeDocumentMoniker": "ClassLibrary\\EtiketResponseDto.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\EtiketResponseDto.cs",
+              "RelativeToolTip": "ClassLibrary\\EtiketResponseDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T16:46:16.315Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "CreateImageSetDto.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\CreateImageSetDto.cs",
+              "RelativeDocumentMoniker": "ClassLibrary\\CreateImageSetDto.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\CreateImageSetDto.cs",
+              "RelativeToolTip": "ClassLibrary\\CreateImageSetDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T16:33:51.705Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "CreateImageSetResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\CreateImageSetResponseDto.cs",
+              "RelativeDocumentMoniker": "ClassLibrary\\CreateImageSetResponseDto.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\CreateImageSetResponseDto.cs",
+              "RelativeToolTip": "ClassLibrary\\CreateImageSetResponseDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T16:33:48.075Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ImagesListResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\ImagesListResponseDto.cs",
+              "RelativeDocumentMoniker": "ClassLibrary\\ImagesListResponseDto.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\ImagesListResponseDto.cs",
+              "RelativeToolTip": "ClassLibrary\\ImagesListResponseDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T16:17:33.381Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ImageResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\ImageResponseDto.cs",
+              "RelativeDocumentMoniker": "ClassLibrary\\ImageResponseDto.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\ClassLibrary\\ImageResponseDto.cs",
+              "RelativeToolTip": "ClassLibrary\\ImageResponseDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T16:17:02.687Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ImageController.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketAPI\\Controllers\\ImageController.cs",
+              "RelativeDocumentMoniker": "EtiketAPI\\Controllers\\ImageController.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketAPI\\Controllers\\ImageController.cs",
+              "RelativeToolTip": "EtiketAPI\\Controllers\\ImageController.cs",
+              "ViewState": "AQIAAHQAAAAAAAAAAAAUwJcAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T15:31:53.068Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ImageServis.cs",
+              "DocumentMoniker": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketAPI\\Services\\ImageServis.cs",
+              "RelativeDocumentMoniker": "EtiketAPI\\Services\\ImageServis.cs",
+              "ToolTip": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketAPI\\Services\\ImageServis.cs",
+              "RelativeToolTip": "EtiketAPI\\Services\\ImageServis.cs",
+              "ViewState": "AQIAAGIAAAAAAAAAAAAswHMAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T15:30:40.027Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+@page "/resim-yukle"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@inject ImageApiService ImageApi
+@inject NavigationManager NavManager
+@rendermode InteractiveServer
+
+<PageTitle>Resim Yükle</PageTitle>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            
+            <!-- Başlık Kartı -->
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">📤 Resim Yükleme</h4>
+                </div>
+                <div class="card-body">
+                    
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <strong>❌ Hata:</strong> @ErrorMessage
+                            <button type="button" class="btn-close" @onclick="@(() => ErrorMessage = string.Empty)"></button>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(SuccessMessage))
+                    {
+                        <div class="alert alert-success alert-dismissible fade show">
+                            <strong>✅ Başarılı:</strong> @SuccessMessage
+                            <button type="button" class="btn-close" @onclick="@(() => SuccessMessage = string.Empty)"></button>
+                        </div>
+                    }
+
+                    <!-- Proje Bilgileri -->
+                    @if (ImageSetId > 0)
+                    {
+                        <div class="alert alert-info">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <strong>📁 Proje ID:</strong> @ImageSetId
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>🔗 Paylaşım Kodu:</strong> <span class="badge bg-primary">@PaylasmaKodu</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Dosya Seçimi -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">📷 Resimleri Seçin (JPG, PNG, GIF)</label>
+                        <InputFile OnChange="OnFileSelected" multiple accept=".jpg,.jpeg,.png,.gif,.bmp" class="form-control" disabled="@isUploading" />
+                        <small class="text-muted">Birden fazla resim seçebilirsiniz. Maksimum dosya boyutu: 10MB</small>
+                    </div>
+
+                    <!-- Seçilen Dosyalar -->
+                    @if (selectedFiles.Any())
+                    {
+                        <div class="card mb-3">
+                            <div class="card-header bg-light">
+                                <strong>Seçilen Dosyalar (@selectedFiles.Count)</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    @foreach (var file in selectedFiles)
+                                    {
+                                        <div class="col-md-3 mb-2">
+                                            <div class="alert alert-secondary mb-0 p-2">
+                                                <small>📄 @file.Name</small>
+                                                <br />
+                                                <small class="text-muted">@FormatFileSize(file.Size)</small>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Yükleme Butonu -->
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success btn-lg" @onclick="UploadImages" disabled="@(!selectedFiles.Any() || isUploading || ImageSetId == 0)">
+                            @if (isUploading)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                                <span>Yükleniyor... (@uploadedCount/@selectedFiles.Count)</span>
+                            }
+                            else
+                            {
+                                <span>🚀 Resimleri Yükle</span>
+                            }
+                        </button>
+
+                        @if (uploadCompleted)
+                        {
+                            <button class="btn btn-primary" @onclick="GoToEtiketleme">
+                                🏷️ Etiketlemeye Geç
+                            </button>
+                        }
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Bilgilendirme -->
+            <div class="card border-info">
+                <div class="card-body">
+                    <h6 class="fw-bold">ℹ️ Resim Yükleme Hakkında</h6>
+                    <ul class="mb-0 small">
+                        <li>Desteklenen formatlar: <strong>JPG, JPEG, PNG, GIF, BMP</strong></li>
+                        <li>Maksimum dosya boyutu: <strong>10 MB</strong></li>
+                        <li>Birden fazla resmi <strong>aynı anda</strong> seçip yükleyebilirsiniz</li>
+                        <li>Yükleme tamamlandıktan sonra <strong>etiketleme</strong> sayfasına geçebilirsiniz</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    public int ImageSetId { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string PaylasmaKodu { get; set; } = string.Empty;
+
+    private List<IBrowserFile> selectedFiles = new();
+    private bool isUploading = false;
+    private bool uploadCompleted = false;
+    private int uploadedCount = 0;
+    private string ErrorMessage = string.Empty;
+    private string SuccessMessage = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        if (ImageSetId == 0)
+        {
+            ErrorMessage = "Proje ID bulunamadı. Lütfen önce bir proje oluşturun.";
+        }
+    }
+
+    private void OnFileSelected(InputFileChangeEventArgs e)
+    {
+        selectedFiles.Clear();
+        ErrorMessage = string.Empty;
+
+        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+
+        foreach (var file in e.GetMultipleFiles(100)) // Maksimum 100 dosya
+        {
+            var extension = Path.GetExtension(file.Name).ToLower();
+            
+            if (!allowedExtensions.Contains(extension))
+            {
+                ErrorMessage = $"Geçersiz dosya formatı: {file.Name}. Sadece resim dosyaları yükleyebilirsiniz.";
+                selectedFiles.Clear();
+                return;
+            }
+
+            if (file.Size > 10 * 1024 * 1024) // 10 MB
+            {
+                ErrorMessage = $"Dosya çok büyük: {file.Name}. Maksimum 10 MB yükleyebilirsiniz.";
+                selectedFiles.Clear();
+                return;
+            }
+
+            selectedFiles.Add(file);
+        }
+    }
+
+    private async Task UploadImages()
+    {
+        if (!selectedFiles.Any() || ImageSetId == 0)
+        {
+            ErrorMessage = "Lütfen en az bir resim seçin ve geçerli bir proje ID'si olduğundan emin olun.";
+            return;
+        }
+
+        isUploading = true;
+        uploadedCount = 0;
+        ErrorMessage = string.Empty;
+        SuccessMessage = string.Empty;
+
+        try
+        {
+            var success = await ImageApi.UploadImages(ImageSetId, selectedFiles);
+
+            if (success)
+            {
+                uploadedCount = selectedFiles.Count;
+                SuccessMessage = $"🎉 {selectedFiles.Count} resim başarıyla yüklendi!";
+                uploadCompleted = true;
+                selectedFiles.Clear();
+            }
+            else
+            {
+                ErrorMessage = "Resimler yüklenemedi. Lütfen tekrar deneyin.";
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Bir hata oluştu: {ex.Message}";
+        }
+        finally
+        {
+            isUploading = false;
+        }
+    }
+
+    private void GoToEtiketleme()
+    {
+        NavManager.NavigateTo($"/etiketleme?kod={PaylasmaKodu}");
+    }
+
+    private string FormatFileSize(long bytes)
+    {
+        string[] sizes = { "B", "KB", "MB", "GB" };
+        double len = bytes;
+        int order = 0;
+        while (len >= 1024 && order < sizes.Length - 1)
+        {
+            order++;
+            len = len / 1024;
+        }
+        return $"{len:0.##} {sizes[order]}";
+    }
+}

@@ -1,0 +1,418 @@
+@page "/etiketleme"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.JSInterop
+@using ClassLibrary
+@inject ImageApiService ImageApi
+@inject EtiketApiService EtiketApi
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IJSRuntime JS
+@inject NavigationManager NavManager
+@rendermode InteractiveServer
+
+<PageTitle>Etiketleme</PageTitle>
+
+<div class="container-fluid mt-3">
+    <div class="row h-100">
+
+        <div class="col-md-2">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white">
+                    <h6 class="mb-0">📷 Galeri</h6>
+                </div>
+                <div class="card-body p-2" style="max-height: 85vh; overflow-y: auto;">
+                    @if (images != null && images.Any())
+                    {
+                        @foreach (var img in images)
+                        {
+                            <div class="card mb-2 @(currentImageId == img.Id ? "border-primary border-3" : "")"
+                                 style="cursor: pointer; transition: transform 0.2s;"
+                                 @onclick="() => SelectImage(img.Id)">
+
+                                <img src="data:image/jpeg;base64,@img.ImageBase64"
+                                     class="card-img-top"
+                                     style="height: 80px; object-fit: cover;" />
+
+                                <div class="card-body p-1 bg-light">
+                                    <small class="text-truncate d-block fw-bold text-dark">@img.Name</small>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted mt-3">
+                            <span class="fs-4">📭</span>
+                            <p class="small">Resim yok</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="card shadow h-100">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">✏️ Çizim Alanı</h5>
+                    @if (currentImage != null)
+                    {
+                        <small>@currentImage.Name (ID: @currentImage.Id)</small>
+                    }
+                </div>
+                <div class="card-body bg-secondary bg-opacity-10 d-flex justify-content-center align-items-start" style="overflow: auto;">
+
+                    @if (currentImage != null)
+                    {
+                        <div id="canvas-container" class="position-relative d-inline-block shadow-lg bg-white">
+                            <img id="labelImage"
+                                 src="data:image/jpeg;base64,@currentImage.ImageBase64"
+                                 style="max-width: 100%; display: block;"
+                                 @ref="imageElement" />
+
+                            <canvas id="labelCanvas"
+                                    style="position: absolute; top: 0; left: 0; cursor: crosshair;"
+                                    @ref="canvasElement"></canvas>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning mt-5 shadow-sm">
+                            <h4>👈 Lütfen sol menüden bir resim seçin.</h4>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+
+            @if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <div class="alert alert-danger mb-2 p-2 small">
+                    <strong>Hata:</strong> @ErrorMessage
+                </div>
+            }
+
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-success text-white">
+                    <h6 class="mb-0">⚙️ İşlemler</h6>
+                </div>
+                <div class="card-body">
+                    <label class="form-label fw-bold small">Etiket Adı:</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">🏷️</span>
+                        <input @bind="currentLabel"
+                               class="form-control"
+                               placeholder="örn: Araba"
+                               @onkeypress="@(e => { if (e.Key == "Enter") StartDrawing(); })" />
+                    </div>
+
+                    <button class="btn btn-success w-100 fw-bold mb-2"
+                            @onclick="StartDrawing"
+                            disabled="@(isDrawing || currentImage == null)">
+                        @(isDrawing ? "Çiziliyor..." : "✏️ Çizmeye Başla")
+                    </button>
+
+                    <small class="text-muted d-block text-center" style="font-size: 0.75rem;">
+                        (Adı girin, butona basın, resim üzerinde kare çizin)
+                    </small>
+                </div>
+            </div>
+
+            <div class="card shadow-sm" style="height: 45vh;">
+                <div class="card-header bg-warning">
+                    <h6 class="mb-0 text-dark">📋 Mevcut Etiketler</h6>
+                </div>
+                <div class="card-body p-2" style="overflow-y: auto;">
+                    @if (currentImageLabels != null && currentImageLabels.Any())
+                    {
+                        @foreach (var label in currentImageLabels)
+                        {
+                            <div class="card mb-2 border-start border-4 border-success">
+                                <div class="card-body p-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong class="text-success">@label.Etiket</strong>
+                                            <div style="font-size: 0.7rem;" class="text-muted mt-1">
+                                                X: @label.XCenter.ToString("F2"), Y: @label.YCenter.ToString("F2")<br />
+                                                W: @label.Width.ToString("F2"), H: @label.Height.ToString("F2")
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline-danger btn-sm"
+                                                title="Sil"
+                                                @onclick="() => DeleteLabel(label.Id)">
+                                            🗑️
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted mt-4">
+                            <p class="small">Henüz etiket yok.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="card mt-3 shadow-sm">
+                <div class="card-body p-2">
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button class="btn btn-secondary w-100" @onclick="PreviousImage" disabled="@(!CanGoPrevious())">
+                                ⬅️ Önceki
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-secondary w-100" @onclick="NextImage" disabled="@(!CanGoNext())">
+                                Sonraki ➡️
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    [SupplyParameterFromQuery(Name = "kod")]
+    public string PaylasmaKodu { get; set; } = string.Empty;
+
+    [SupplyParameterFromQuery]
+    public int? ImageId { get; set; }
+
+    // Listeler ve Modeller (DTO)
+    private List<ImageResponseDto> images = new();
+    private ImageResponseDto? currentImage = null;
+    private int currentImageId = 0;
+
+    private List<EtiketResponseDto> currentImageLabels = new();
+
+    private string currentLabel = string.Empty;
+    private bool isDrawing = false;
+    private string ErrorMessage = string.Empty;
+    private int currentUserId = 0;
+
+    private ElementReference canvasElement;
+    private ElementReference imageElement;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var userIdClaim = authState.User.FindFirst("UserId")?.Value;
+        if (!string.IsNullOrEmpty(userIdClaim))
+        {
+            currentUserId = int.Parse(userIdClaim);
+        }
+
+        await LoadImages();
+    }
+
+    private async Task LoadImages()
+    {
+        try
+        {
+            var result = await ImageApi.GetImagesByCode(PaylasmaKodu);
+
+            if (result != null && result.resimler != null)
+            {
+                images = result.resimler;
+
+                if (ImageId.HasValue && ImageId.Value > 0)
+                {
+                    await SelectImage(ImageId.Value);
+                }
+                else if (images.Any())
+                {
+                    await SelectImage(images.First().Id);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Resimler yüklenemedi: {ex.Message}";
+        }
+    }
+
+    private async Task SelectImage(int imageId)
+    {
+        ErrorMessage = string.Empty;
+        currentImageId = imageId;
+        currentImage = images.FirstOrDefault(i => i.Id == imageId);
+
+        if (currentImage != null)
+        {
+            await LoadLabelsForCurrentImage();
+
+            // ÖNEMLİ: DOM'un güncellenmesi için minik bir bekleme
+            // Bu sayede resim yüklenir ve Canvas doğru boyutu alır.
+            await Task.Delay(50);
+            await InitializeCanvas();
+            await DrawExistingLabels();
+        }
+    }
+
+    private async Task LoadLabelsForCurrentImage()
+    {
+        try
+        {
+            var result = await EtiketApi.GetEtiketlerByImage(currentImageId);
+            if (result != null)
+            {
+                currentImageLabels = result;
+            }
+            else
+            {
+                currentImageLabels.Clear();
+            }
+        }
+        catch
+        {
+            currentImageLabels.Clear();
+        }
+    }
+
+    private async Task InitializeCanvas()
+    {
+        try
+        {
+            // JS fonksiyonunu çağırır (labeling.js dosyasında initCanvas olmalı)
+            await JS.InvokeVoidAsync("initCanvas");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Canvas başlatılamadı: {ex.Message}");
+        }
+    }
+
+    private async Task StartDrawing()
+    {
+        if (string.IsNullOrWhiteSpace(currentLabel))
+        {
+            ErrorMessage = "⚠️ Lütfen önce sağ taraftan bir etiket adı girin!";
+            return;
+        }
+
+        ErrorMessage = string.Empty;
+        isDrawing = true;
+
+        try
+        {
+            // JS'deki startDrawing fonksiyonunu çağırır ve koordinat string'i bekler
+            var result = await JS.InvokeAsync<string>("startDrawing");
+
+            if (!string.IsNullOrEmpty(result))
+            {
+                var coords = result.Split(',');
+                if (coords.Length == 4)
+                {
+                    await SaveLabel(
+                        float.Parse(coords[0], System.Globalization.CultureInfo.InvariantCulture),
+                        float.Parse(coords[1], System.Globalization.CultureInfo.InvariantCulture),
+                        float.Parse(coords[2], System.Globalization.CultureInfo.InvariantCulture),
+                        float.Parse(coords[3], System.Globalization.CultureInfo.InvariantCulture)
+                    );
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Kullanıcı çizimi iptal ederse veya hata olursa
+            Console.WriteLine($"Çizim iptal veya hata: {ex.Message}");
+            isDrawing = false;
+        }
+        finally
+        {
+            // isDrawing burada false yapılmaz, SaveLabel içinde veya hata durumunda yapılır
+            // Ancak JS tarafı promise döndüğü için çizim bitene kadar burası beklemezse UI kilitlenebilir.
+            // Bizim senaryomuzda JS tarafı çizim bitince string dönüyor, o yüzden sorun yok.
+            isDrawing = false;
+        }
+    }
+
+    private async Task SaveLabel(float xCenter, float yCenter, float width, float height)
+    {
+        try
+        {
+            var dto = new EtiketEkleDto
+                {
+                    UserId = currentUserId,
+                    ImageId = currentImageId,
+                    Etiket = currentLabel,
+                    XCenter = xCenter,
+                    YCenter = yCenter,
+                    Width = width,
+                    Height = height
+                };
+
+            var result = await EtiketApi.EtiketEkle(dto);
+
+            if (result != null)
+            {
+                await LoadLabelsForCurrentImage();
+                await DrawExistingLabels();
+                // currentLabel = string.Empty; // İsterseniz etiket adını temizleyebilirsiniz, seri üretim için temizlememek daha iyi.
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Kayıt hatası: {ex.Message}";
+        }
+    }
+
+    private async Task DeleteLabel(int labelId)
+    {
+        try
+        {
+            var success = await EtiketApi.DeleteEtiket(labelId);
+            if (success)
+            {
+                await LoadLabelsForCurrentImage();
+                await DrawExistingLabels();
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Silme hatası: {ex.Message}";
+        }
+    }
+
+    private async Task DrawExistingLabels()
+    {
+        try
+        {
+            var labelsJson = System.Text.Json.JsonSerializer.Serialize(currentImageLabels);
+            await JS.InvokeVoidAsync("drawExistingLabels", labelsJson);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Çizim hatası: {ex.Message}");
+        }
+    }
+
+    private async Task NextImage()
+    {
+        var currentIndex = images.FindIndex(i => i.Id == currentImageId);
+        if (currentIndex < images.Count - 1)
+        {
+            await SelectImage(images[currentIndex + 1].Id);
+        }
+    }
+
+    private async Task PreviousImage()
+    {
+        var currentIndex = images.FindIndex(i => i.Id == currentImageId);
+        if (currentIndex > 0)
+        {
+            await SelectImage(images[currentIndex - 1].Id);
+        }
+    }
+
+    private bool CanGoNext() => images.FindIndex(i => i.Id == currentImageId) < images.Count - 1;
+    private bool CanGoPrevious() => images.FindIndex(i => i.Id == currentImageId) > 0;
+}

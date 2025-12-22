@@ -1,0 +1,87 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = EtiketFrontend
+build_property.RootNamespace = EtiketFrontend
+build_property.ProjectDir = C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\EtiketFrontend\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\EtiketFrontend
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/App.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Pages/Error.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Pages/Etiketleme.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFdGlrZXRsZW1lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Pages/Export.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFeHBvcnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Pages/KodIleAc.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xLb2RJbGVBYy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Pages/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMb2dpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Pages/ProjeOlustur.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9qZU9sdXN0dXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Pages/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZWdpc3Rlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Pages/Resimler.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZXNpbWxlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Pages/ResimYukle.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZXNpbVl1a2xlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-gsbuq7yjbs
+
+[C:/Users/EXCALIBUR/Desktop/EtiketProje/EtiketProjesi/EtiketFrontend/Components/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-mvf355wlr2

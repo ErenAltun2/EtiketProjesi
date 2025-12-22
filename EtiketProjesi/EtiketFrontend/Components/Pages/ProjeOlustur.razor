@@ -1,0 +1,157 @@
+@page "/proje-olustur"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@inject ImageApiService ImageApi
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavManager
+@rendermode InteractiveServer
+
+<PageTitle>Yeni Proje Oluştur</PageTitle>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            
+            <!-- Başlık -->
+            <div class="card shadow mb-4">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">📁 Yeni Proje Oluştur</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">
+                        Yeni bir etiketleme projesi oluşturun. Her proje için benzersiz bir paylaşım kodu oluşturulacak.
+                    </p>
+
+                    @if (!string.IsNullOrEmpty(SuccessMessage))
+                    {
+                        <div class="alert alert-success">
+                            <h5>✅ @SuccessMessage</h5>
+                            <hr />
+                            <p class="mb-2"><strong>Paylaşım Kodu:</strong> <span class="badge bg-success fs-5">@PaylasmaKodu</span></p>
+                            <p class="mb-2"><strong>Proje ID:</strong> @ImageSetId</p>
+                            <p class="mb-3"><strong>Oluşturma Tarihi:</strong> @OlusturmaTarihi</p>
+                            
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary" @onclick="GoToImageUpload">
+                                    📤 Resim Yüklemeye Geç
+                                </button>
+                                <button class="btn btn-secondary" @onclick="CreateAnother">
+                                    ➕ Başka Proje Oluştur
+                                </button>
+                            </div>
+                        </div>
+                    }
+                    else if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="alert alert-danger">
+                            <strong>❌ Hata:</strong> @ErrorMessage
+                        </div>
+                    }
+
+                    @if (!isProjectCreated)
+                    {
+                        <div class="text-center">
+                            <button class="btn btn-success btn-lg px-5" @onclick="CreateProject" disabled="@isLoading">
+                                @if (isLoading)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2"></span>
+                                    <span>Oluşturuluyor...</span>
+                                }
+                                else
+                                {
+                                    <span>🚀 Proje Oluştur</span>
+                                }
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Bilgilendirme -->
+            <div class="card border-info">
+                <div class="card-body">
+                    <h6 class="fw-bold">ℹ️ Proje Oluşturma Hakkında</h6>
+                    <ul class="mb-0 small">
+                        <li>Her proje için benzersiz bir <strong>6 haneli paylaşım kodu</strong> oluşturulur</li>
+                        <li>Bu kodu kullanarak başkalarıyla <strong>işbirliği</strong> yapabilirsiniz</li>
+                        <li>Proje oluşturduktan sonra <strong>resim yükleme</strong> sayfasına geçebilirsiniz</li>
+                        <li>Yüklediğiniz resimleri daha sonra <strong>etiketleyebilirsiniz</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool isLoading = false;
+    private bool isProjectCreated = false;
+    private string SuccessMessage = string.Empty;
+    private string ErrorMessage = string.Empty;
+    private string PaylasmaKodu = string.Empty;
+    private int ImageSetId = 0;
+    private string OlusturmaTarihi = string.Empty;
+
+    private async Task CreateProject()
+    {
+        isLoading = true;
+        ErrorMessage = string.Empty;
+        SuccessMessage = string.Empty;
+
+        try
+        {
+            // Kullanıcı ID'yi al
+            var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+            var userIdClaim = authState.User.FindFirst("UserId")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                ErrorMessage = "Kullanıcı bilgisi alınamadı. Lütfen tekrar giriş yapın.";
+                return;
+            }
+
+            int userId = int.Parse(userIdClaim);
+
+            // API'ye proje oluşturma isteği gönder
+            var dto = new CreateImageSetDto { UserId = userId };
+            var result = await ImageApi.CreateImageSet(dto);
+
+            if (result != null)
+            {
+                isProjectCreated = true;
+                SuccessMessage = "Proje başarıyla oluşturuldu!";
+                PaylasmaKodu = result.paylasmaKodu.ToString();
+                ImageSetId = (int)result.imageSetId;
+                OlusturmaTarihi = result.olusturmaTarihi.ToString();
+            }
+            else
+            {
+                ErrorMessage = "Proje oluşturulamadı. Lütfen tekrar deneyin.";
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Bir hata oluştu: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void GoToImageUpload()
+    {
+        NavManager.NavigateTo($"/resim-yukle?imageSetId={ImageSetId}&kod={PaylasmaKodu}");
+    }
+
+    private void CreateAnother()
+    {
+        isProjectCreated = false;
+        SuccessMessage = string.Empty;
+        ErrorMessage = string.Empty;
+        PaylasmaKodu = string.Empty;
+        ImageSetId = 0;
+        OlusturmaTarihi = string.Empty;
+    }
+}

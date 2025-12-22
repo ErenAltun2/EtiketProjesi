@@ -1,0 +1,199 @@
+@page "/export"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@inject ExportApiService ExportApi
+@inject NavigationManager NavManager
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+
+<PageTitle>Dataset İndir</PageTitle>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            
+            <!-- Başlık Kartı -->
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">📦 YOLO Dataset İndir</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">
+                        Etiketlediğiniz resimleri YOLO formatında ZIP dosyası olarak indirin.
+                        İndirilen dosya model eğitimi için hazırdır.
+                    </p>
+
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="alert alert-danger">
+                            <strong>❌</strong> @ErrorMessage
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(SuccessMessage))
+                    {
+                        <div class="alert alert-success">
+                            <strong>✅</strong> @SuccessMessage
+                        </div>
+                    }
+
+                    <!-- Kod Girişi -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Paylaşım Kodu (6 haneli)</label>
+                        <input @bind="PaylasmaKodu" 
+                               class="form-control form-control-lg text-center" 
+                               placeholder="123456"
+                               maxlength="6"
+                               disabled="@isDownloading" />
+                        <small class="text-muted">Projenizin paylaşım kodunu girin</small>
+                    </div>
+
+                    <!-- İndirme Butonu -->
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success btn-lg" 
+                                @onclick="DownloadDataset" 
+                                disabled="@(string.IsNullOrWhiteSpace(PaylasmaKodu) || isDownloading)">
+                            @if (isDownloading)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                                <span>İndiriliyor...</span>
+                            }
+                            else
+                            {
+                                <span>⬇️ ZIP Dosyası İndir</span>
+                            }
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Dataset İçeriği Bilgilendirme -->
+            <div class="card mt-4 border-info">
+                <div class="card-header bg-info text-white">
+                    <h6 class="mb-0">📋 ZIP Dosyası İçeriği</h6>
+                </div>
+                <div class="card-body">
+                    <p class="mb-2">İndirilen ZIP dosyası şu yapıya sahiptir:</p>
+                    <pre class="bg-light p-3 rounded">
+dataset_XXXXXX.zip
+├── images/
+│   ├── resim1.jpg
+│   ├── resim2.jpg
+│   └── ...
+├── labels/
+│   ├── resim1.txt
+│   ├── resim2.txt
+│   └── ...
+├── classes.txt
+└── data.yaml</pre>
+                    
+                    <hr />
+                    
+                    <h6 class="fw-bold">📄 Dosya Açıklamaları:</h6>
+                    <ul class="small">
+                        <li><strong>images/</strong> - Tüm resimleriniz</li>
+                        <li><strong>labels/</strong> - Her resim için YOLO format etiket dosyaları (txt)</li>
+                        <li><strong>classes.txt</strong> - Kullanılan tüm sınıf isimleri</li>
+                        <li><strong>data.yaml</strong> - YOLO eğitim konfigürasyonu</li>
+                    </ul>
+
+                    <hr />
+
+                    <h6 class="fw-bold">🎯 YOLO Format Örneği:</h6>
+                    <p class="small mb-1">Her txt dosyasında şu formatta satırlar bulunur:</p>
+                    <pre class="bg-light p-2 rounded small">class_id x_center y_center width height
+0 0.512 0.345 0.123 0.234
+1 0.678 0.567 0.089 0.156</pre>
+                    <p class="small text-muted mb-0">
+                        Tüm değerler 0-1 arası normalize edilmiştir.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Kullanım Talimatları -->
+            <div class="card mt-4 border-warning">
+                <div class="card-header bg-warning">
+                    <h6 class="mb-0">🚀 Nasıl Kullanılır?</h6>
+                </div>
+                <div class="card-body">
+                    <ol class="small mb-0">
+                        <li>ZIP dosyasını indirin ve açın</li>
+                        <li>YOLOv8/YOLOv5 projenizin <code>datasets/</code> klasörüne kopyalayın</li>
+                        <li><code>data.yaml</code> dosyasındaki yolu projenize göre düzenleyin</li>
+                        <li>Eğitimi başlatın:
+                            <pre class="bg-light p-2 rounded mt-2">yolo train data=data.yaml model=yolov8n.pt epochs=100</pre>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    private string PaylasmaKodu = string.Empty;
+    private bool isDownloading = false;
+    private string ErrorMessage = string.Empty;
+    private string SuccessMessage = string.Empty;
+
+    private async Task DownloadDataset()
+    {
+        if (string.IsNullOrWhiteSpace(PaylasmaKodu) || PaylasmaKodu.Length != 6)
+        {
+            ErrorMessage = "Lütfen geçerli bir 6 haneli kod girin.";
+            return;
+        }
+
+        isDownloading = true;
+        ErrorMessage = string.Empty;
+        SuccessMessage = string.Empty;
+
+        try
+        {
+            // API'den ZIP dosyasını al
+            var zipData = await ExportApi.DownloadYoloDataset(PaylasmaKodu);
+
+            if (zipData != null && zipData.Length > 0)
+            {
+                // Dosyayı kullanıcıya indir
+                var fileName = $"dataset_{PaylasmaKodu}.zip";
+                await DownloadFile(fileName, zipData);
+                
+                SuccessMessage = $"✅ Dataset başarıyla indirildi! ({FormatFileSize(zipData.Length)})";
+            }
+            else
+            {
+                ErrorMessage = "Bu paylaşım koduna ait dataset bulunamadı veya henüz etiket eklenmemiş.";
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"İndirme sırasında bir hata oluştu: {ex.Message}";
+        }
+        finally
+        {
+            isDownloading = false;
+        }
+    }
+
+    private async Task DownloadFile(string fileName, byte[] data)
+    {
+        var base64 = Convert.ToBase64String(data);
+        await JS.InvokeVoidAsync("downloadFile", fileName, base64);
+    }
+
+    private string FormatFileSize(long bytes)
+    {
+        string[] sizes = { "B", "KB", "MB", "GB" };
+        double len = bytes;
+        int order = 0;
+        while (len >= 1024 && order < sizes.Length - 1)
+        {
+            order++;
+            len = len / 1024;
+        }
+        return $"{len:0.##} {sizes[order]}";
+    }
+}

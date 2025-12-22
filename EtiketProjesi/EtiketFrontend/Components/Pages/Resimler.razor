@@ -1,0 +1,171 @@
+@page "/resimler"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@using ClassLibrary
+@inject ImageApiService ImageApi
+@inject NavigationManager NavManager
+@rendermode InteractiveServer
+
+<PageTitle>Resimler</PageTitle>
+
+<div class="container-fluid mt-4">
+
+    <!-- Başlık -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">📷 Proje Resimleri</h4>
+                    <span class="badge bg-light text-dark">Kod: @PaylasmaKodu</span>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="alert alert-danger">
+                            <strong>❌</strong> @ErrorMessage
+                        </div>
+                    }
+
+                    @if (isLoading)
+                    {
+                        <div class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Yükleniyor...</span>
+                            </div>
+                            <p class="mt-3 text-muted">Resimler yükleniyor...</p>
+                        </div>
+                    }
+                    else if (images != null && images.Count > 0)
+                    {
+                        <p class="text-muted mb-3">
+                            Toplam <strong>@images.Count</strong> resim bulundu.
+                            Etiketleme yapmak için resme tıklayın.
+                        </p>
+
+                        <!-- Resim Galerisi -->
+                        <div class="row g-3">
+                            @foreach (var image in images)
+                            {
+                                <div class="col-md-3 col-lg-2">
+                                    <div class="card h-100 shadow-sm hover-card" style="cursor: pointer;" @onclick="() => GoToEtiketleme(image.Id)">
+                                        <img src="data:image/jpeg;base64,@image.ImageBase64"
+                                             class="card-img-top"
+                                             alt="@image.Name"
+                                             style="height: 150px; object-fit: cover;" />
+                                        <div class="card-body p-2">
+                                            <h6 class="card-title small mb-1" title="@image.Name">
+                                                @TruncateFileName(image.Name, 20)
+                                            </h6>
+                                            <small class="text-muted d-block">ID: @image.Id</small>
+                                            <small class="text-muted d-block">@image.yuklenmeTarihi.ToString("dd.MM.yyyy HH:mm")</small>
+                                        </div>
+                                        <div class="card-footer p-2 bg-light">
+                                            <button class="btn btn-sm btn-primary w-100" @onclick:stopPropagation="true" @onclick="() => GoToEtiketleme(image.Id)">
+                                                🏷️ Etiketle
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning text-center">
+                            <h5>📭 Henüz resim yüklenmemiş</h5>
+                            <p>Bu projeye henüz resim yüklenmemiş. Resim yüklemek için aşağıdaki butona tıklayın.</p>
+                            <button class="btn btn-primary" @onclick="GoToUpload">
+                                📤 Resim Yükle
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .hover-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+        }
+</style>
+
+@code {
+    [SupplyParameterFromQuery(Name = "kod")]
+    public string PaylasmaKodu { get; set; } = string.Empty;
+
+    private List<ImageResponseDto> images = new();
+    private bool isLoading = true;
+    private string ErrorMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrWhiteSpace(PaylasmaKodu))
+        {
+            ErrorMessage = "Paylaşım kodu bulunamadı. Lütfen geçerli bir kod ile giriş yapın.";
+            isLoading = false;
+            return;
+        }
+
+        await LoadImages();
+    }
+
+    private async Task LoadImages()
+    {
+        isLoading = true;
+        ErrorMessage = string.Empty;
+
+        try
+        {
+            Console.WriteLine($"🔍 Resimler yükleniyor: {PaylasmaKodu}");
+            var result = await ImageApi.GetImagesByCode(PaylasmaKodu);
+
+            if (result != null && result.resimler != null && result.resimler.Any())
+            {
+                images = result.resimler;
+                Console.WriteLine($"✅ {images.Count} resim yüklendi");
+            }
+            else
+            {
+                Console.WriteLine("⚠️ Resim bulunamadı");
+                ErrorMessage = "Bu paylaşım koduna ait resim bulunamadı.";
+                images = new List<ImageResponseDto>();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Hata: {ex.Message}");
+            ErrorMessage = $"Resimler yüklenirken bir hata oluştu: {ex.Message}";
+            images = new List<ImageResponseDto>();
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void GoToEtiketleme(int imageId)
+    {
+        NavManager.NavigateTo($"/etiketleme?kod={PaylasmaKodu}&imageId={imageId}");
+    }
+
+    private void GoToUpload()
+    {
+        NavManager.NavigateTo($"/resim-yukle?kod={PaylasmaKodu}");
+    }
+
+    private string TruncateFileName(string fileName, int maxLength)
+    {
+        if (string.IsNullOrEmpty(fileName) || fileName.Length <= maxLength)
+            return fileName;
+
+        return fileName.Substring(0, maxLength - 3) + "...";
+    }
+}

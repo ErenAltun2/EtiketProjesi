@@ -1,0 +1,152 @@
+@page "/kod-ile-ac"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@using ClassLibrary
+@inject ImageApiService ImageApi
+@inject NavigationManager NavManager
+@rendermode InteractiveServer
+
+<PageTitle>Paylaşım Kodu ile Aç</PageTitle>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <!-- Kod Girişi Kartı -->
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">🔗 Paylaşım Kodu ile Aç</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">
+                        Arkadaşınızın paylaştığı 6 haneli kodu girerek projeye erişin.
+                    </p>
+
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="alert alert-danger">
+                            <strong>❌</strong> @ErrorMessage
+                        </div>
+                    }
+
+                    @if (projectFound && projectInfo != null)
+                    {
+                        <div class="alert alert-success">
+                            <h5>✅ Proje Bulundu!</h5>
+                            <hr />
+                            <p class="mb-1"><strong>Proje ID:</strong> @projectInfo.imageSetId</p>
+                            <p class="mb-1"><strong>Paylaşım Kodu:</strong> <span class="badge bg-success">@projectInfo.paylasmaKodu</span></p>
+                            <p class="mb-1"><strong>Oluşturma Tarihi:</strong> @projectInfo.olusturmaTarihi</p>
+                            <p class="mb-3"><strong>Resim Sayısı:</strong> @projectInfo.resimSayisi</p>
+
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary" @onclick="GoToImages">
+                                    📷 Resimleri Görüntüle
+                                </button>
+                                <button class="btn btn-success" @onclick="GoToEtiketleme">
+                                    🏷️ Etiketleme Sayfasına Git
+                                </button>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <EditForm Model="this" OnValidSubmit="CheckCode" FormName="KodGirisFormu">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Paylaşım Kodu (6 haneli)</label>
+                                <InputText @bind-Value="PaylasmaKodu"
+                                           class="form-control form-control-lg text-center"
+                                           placeholder="örn: 123456"
+                                           maxlength="6"
+                                           disabled="@isLoading" />
+                                <small class="text-muted">Arkadaşınızın size verdiği 6 haneli kodu girin</small>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-info btn-lg" disabled="@isLoading">
+                                    @if (isLoading)
+                                    {
+                                        <span class="spinner-border spinner-border-sm me-2"></span>
+                                        <span>Kontrol Ediliyor...</span>
+                                    }
+                                    else
+                                    {
+                                        <span>🔍 Projeyi Bul</span>
+                                    }
+                                </button>
+                            </div>
+                        </EditForm>
+                    }
+
+                </div>
+            </div>
+
+            <!-- Bilgilendirme -->
+            <div class="card mt-3 border-info">
+                <div class="card-body">
+                    <h6 class="fw-bold">ℹ️ Paylaşım Kodu Nedir?</h6>
+                    <p class="small mb-0">
+                        Her proje oluşturulduğunda benzersiz bir 6 haneli kod verilir.
+                        Bu kodu kullanarak başkaları projenize erişip <strong>etiketleme yapabilir</strong>
+                        veya <strong>resimleri görüntüleyebilir</strong>.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    private string PaylasmaKodu = string.Empty;
+    private bool isLoading = false;
+    private bool projectFound = false;
+    private string ErrorMessage = string.Empty;
+    private CreateImageSetResponseDto? projectInfo = null;  // ✅ dynamic yerine DTO
+
+    private async Task CheckCode()
+    {
+        if (string.IsNullOrWhiteSpace(PaylasmaKodu) || PaylasmaKodu.Length != 6)
+        {
+            ErrorMessage = "Lütfen geçerli bir 6 haneli kod girin.";
+            return;
+        }
+
+        isLoading = true;
+        ErrorMessage = string.Empty;
+
+        try
+        {
+            // Proje bilgilerini al
+            var result = await ImageApi.GetImageSetInfo(PaylasmaKodu);
+
+            if (result != null)
+            {
+                projectInfo = result;
+                projectFound = true;
+            }
+            else
+            {
+                ErrorMessage = "Bu paylaşım koduna ait bir proje bulunamadı. Lütfen kodu kontrol edin.";
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Bir hata oluştu: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void GoToImages()
+    {
+        NavManager.NavigateTo($"/resimler?kod={PaylasmaKodu}");
+    }
+
+    private void GoToEtiketleme()
+    {
+        NavManager.NavigateTo($"/etiketleme?kod={PaylasmaKodu}");
+    }
+}

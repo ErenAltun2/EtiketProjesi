@@ -1,0 +1,432 @@
+@page "/"
+@inject IJSRuntime JSRuntime
+@using ClassLibrary
+@using EtiketFrontend.Services
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavManager
+@inject ImageApiService ImageApi
+@rendermode InteractiveServer
+
+<PageTitle>Ana Sayfa - Etiket Sistemi</PageTitle>
+
+<div class="container mt-5">
+
+    <AuthorizeView>
+        <Authorized>
+            @* Giriş yapmış kullanıcılar için *@
+            <div class="row">
+                <div class="col-md-12">
+                    @* DÜZELTME: "style" kaldırıldı, yerine "bg-primary" eklendi *@
+                    <div class="p-5 rounded shadow bg-primary text-white">
+
+                        <h1 class="display-4 fw-bold">👋 Hoş geldin, @context.User.FindFirst("Isim")?.Value!</h1>
+                        <p class="lead">YOLO Etiketleme Sistemi'ne başarıyla giriş yaptın.</p>
+
+                        <hr class="my-4 bg-white opacity-100">
+
+                        <p>Artık resim yükleme, etiketleme ve YOLO dataseti oluşturma özelliklerini kullanabilirsin.</p>
+                    </div>
+                </div>
+            </div>
+
+            @* Hızlı Erişim Kartları *@
+            <div class="row mt-4 g-4">
+
+                <!-- Yeni Proje Oluştur -->
+                <div class="col-md-3">
+                    <div class="card shadow-sm h-100 border-0 hover-card" style="cursor: pointer;" @onclick='() => NavManager.NavigateTo("/proje-olustur")'>
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <span class="display-1">📁</span>
+                            </div>
+                            <h5 class="card-title fw-bold">Yeni Proje Oluştur</h5>
+                            <p class="card-text text-muted">Etiketleme için yeni bir proje başlat</p>
+                            <button class="btn btn-success mt-2">Oluştur</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJELERİM - YENİ EKLENEN -->
+                <div class="col-md-3">
+                    <div class="card shadow-sm h-100 border-0 hover-card" style="cursor: pointer;" @onclick="ToggleProjeler">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <span class="display-1">📂</span>
+                            </div>
+                            <h5 class="card-title fw-bold">Projelerim</h5>
+                            <p class="card-text text-muted">Oluşturduğun projelere eriş</p>
+                            <button class="btn btn-primary mt-2">
+                                @if (projelerGoster)
+                                {
+                                    <span>Gizle</span>
+                                }
+                                else
+                                {
+                                    <span>Göster</span>
+                                }
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kod ile Aç -->
+                <div class="col-md-3">
+                    <div class="card shadow-sm h-100 border-0 hover-card" style="cursor: pointer;" @onclick='() => NavManager.NavigateTo("/kod-ile-ac")'>
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <span class="display-1">🔗</span>
+                            </div>
+                            <h5 class="card-title fw-bold">Kod ile Aç</h5>
+                            <p class="card-text text-muted">Paylaşım kodu ile projeye eriş</p>
+                            <button class="btn btn-info mt-2">Aç</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dataset İndir -->
+                <div class="col-md-3">
+                    <div class="card shadow-sm h-100 border-0 hover-card" style="cursor: pointer;" @onclick='() => NavManager.NavigateTo("/export")'>
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <span class="display-1">📦</span>
+                            </div>
+                            <h5 class="card-title fw-bold">Dataset İndir</h5>
+                            <p class="card-text text-muted">YOLO formatında ZIP olarak indir</p>
+                            <button class="btn btn-warning mt-2">İndir</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            @* PROJELERİM LİSTESİ - YENİ EKLENEN *@
+            @if (projelerGoster)
+            {
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card shadow border-0">
+                            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">📂 Projelerim</h5>
+                                <button class="btn btn-sm btn-light" @onclick="YukleniyorProjeler">
+                                    <span>🔄 Yenile</span>
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                @if (projelerYukleniyor)
+                                {
+                                    <div class="text-center py-4">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Yükleniyor...</span>
+                                        </div>
+                                        <p class="mt-2">Projeler yükleniyor...</p>
+                                    </div>
+                                }
+                                else if (projeler == null || !projeler.Any())
+                                {
+                                    <div class="alert alert-info text-center">
+                                        <h5>📭 Henüz proje oluşturmadınız</h5>
+                                        <p class="mb-0">Hemen yeni bir proje oluşturun ve etiketlemeye başlayın!</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>📅 Oluşturma Tarihi</th>
+                                                    <th>🔑 Paylaşım Kodu</th>
+                                                    <th>🖼️ Resim Sayısı</th>
+                                                    <th>İşlemler</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var proje in projeler)
+                                                {
+                                                    <tr>
+                                                        <td>@proje.olusturmaTarihi</td>
+                                                        <td>
+                                                            <span class="badge bg-primary fs-6">@proje.paylasmaKodu</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge bg-success">@proje.resimSayisi resim</span>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-info me-2"
+                                                                    @onclick="() => ProjeAc(proje.paylasmaKodu)">
+                                                                🔗 Aç
+                                                            </button>
+                                                            <button class="btn btn-sm btn-warning"
+                                                                    @onclick="() => KoduKopyala(proje.paylasmaKodu)">
+                                                                📋 Kopyala
+                                                            </button>
+                                                            <button class="btn btn-sm btn-danger"
+                                                                    @onclick="() => ProjeSil(proje.imageSetId)">
+                                                                🗑️ Sil
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @* İşlem Akışı *@
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <div class="card shadow border-0">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">🎯 Nasıl Kullanılır?</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 text-center mb-3">
+                                    <div class="bg-light rounded p-3">
+                                        <h1 class="text-primary">1️⃣</h1>
+                                        <h6 class="fw-bold">Proje Oluştur</h6>
+                                        <p class="small text-muted mb-0">Yeni bir etiketleme projesi başlat</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center mb-3">
+                                    <div class="bg-light rounded p-3">
+                                        <h1 class="text-success">2️⃣</h1>
+                                        <h6 class="fw-bold">Resim Yükle</h6>
+                                        <p class="small text-muted mb-0">JPG, PNG formatında resimleri yükle</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center mb-3">
+                                    <div class="bg-light rounded p-3">
+                                        <h1 class="text-info">3️⃣</h1>
+                                        <h6 class="fw-bold">Etiketle</h6>
+                                        <p class="small text-muted mb-0">Bounding box çiz ve etiket ekle</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center mb-3">
+                                    <div class="bg-light rounded p-3">
+                                        <h1 class="text-warning">4️⃣</h1>
+                                        <h6 class="fw-bold">İndir</h6>
+                                        <p class="small text-muted mb-0">YOLO formatında dataset al</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* Özellikler *@
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <h3 class="text-center mb-4">✨ Özellikler</h3>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 border-primary">
+                        <div class="card-body text-center">
+                            <h2 class="text-primary">📤</h2>
+                            <h6 class="card-title fw-bold">Toplu Yükleme</h6>
+                            <p class="card-text small text-muted">Birden fazla resmi aynı anda yükle</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 border-success">
+                        <div class="card-body text-center">
+                            <h2 class="text-success">🎯</h2>
+                            <h6 class="card-title fw-bold">YOLO Format</h6>
+                            <p class="card-text small text-muted">Endüstri standardı etiketleme</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 border-info">
+                        <div class="card-body text-center">
+                            <h2 class="text-info">🔗</h2>
+                            <h6 class="card-title fw-bold">İşbirliği</h6>
+                            <p class="card-text small text-muted">Paylaşım kodu ile ekip çalışması</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 border-warning">
+                        <div class="card-body text-center">
+                            <h2 class="text-warning">⚡</h2>
+                            <h6 class="card-title fw-bold">Hızlı ve Kolay</h6>
+                            <p class="card-text small text-muted">Kullanıcı dostu arayüz</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </Authorized>
+
+        <NotAuthorized>
+            @* Giriş yapmamış kullanıcılar için *@
+            <div class="row">
+                <div class="col-md-12">
+                    @* DEĞİŞİKLİK: Arka plan bg-light yapıldı, gradient kaldırıldı *@
+                    <div class="jumbotron bg-light text-center p-5 rounded shadow">
+
+                        @* DEĞİŞİKLİK: text-white yerine text-primary (Mavi) yapıldı *@
+                        <h1 class="display-2 text-primary fw-bold">🏷️ YOLO Etiketleme</h1>
+
+                        @* DEĞİŞİKLİK: text-white yerine text-dark (Siyah) yapıldı *@
+                        <p class="lead mt-3 text-dark">Profesyonel resim etiketleme ve dataset oluşturma platformu</p>
+
+                        <hr class="my-4">
+
+                        @* DEĞİŞİKLİK: Giriş yap butonunun üzerindeki yazı koyu gri yapıldı *@
+                        <p class="text-muted fs-5">Makine öğrenimi projeleriniz için etiketlenmiş dataset oluşturun!</p>
+
+                        <div class="d-flex justify-content-center gap-3 mt-4">
+                            @* DEĞİŞİKLİK: Buton rengi btn-primary (Mavi) yapıldı *@
+                            <a class="btn btn-primary btn-lg px-5 shadow" href="/register">
+                                <strong>📝 Kayıt Ol</strong>
+                            </a>
+
+                            @* DEĞİŞİKLİK: Buton rengi btn-outline-primary (Çerçeveli Mavi) yapıldı *@
+                            <a class="btn btn-outline-primary btn-lg px-5 shadow" href="/login">
+                                <strong>🔐 Giriş Yap</strong>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* ... Sayfanın geri kalanı (Özellikler vb.) aynı kalabilir ... *@
+
+            @* Özellikler - Giriş Yapmamış *@
+            <div class="row mt-5">
+                @* ... (Buradaki kodlarınızda değişiklik yapmanıza gerek yok) ... *@
+                <div class="col-md-12 mb-4">
+                    <h2 class="text-center fw-bold">🚀 Neler Yapabilirsiniz?</h2>
+                    <p class="text-center text-muted">Hemen kayıt olun ve etiketlemeye başlayın!</p>
+                </div>
+            </div>
+
+        </NotAuthorized>
+    </AuthorizeView>
+
+</div>
+
+<style>
+    .hover-card {
+        transition: all 0.3s ease;
+    }
+
+        .hover-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+        }
+
+    .bg-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+</style>
+
+@code {
+    private bool projelerGoster = false;
+    private bool projelerYukleniyor = false;
+    private List<CreateImageSetResponseDto>? projeler = null;
+    private int kullaniciId = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            // Kullanıcı ID'sini al
+            var userIdClaim = user.FindFirst("UserId")?.Value;
+            if (int.TryParse(userIdClaim, out int userId))
+            {
+                kullaniciId = userId;
+            }
+        }
+    }
+
+    private async Task ToggleProjeler()
+    {
+        projelerGoster = !projelerGoster;
+
+        if (projelerGoster && (projeler == null || !projeler.Any()))
+        {
+            await YukleniyorProjeler();
+        }
+    }
+
+    private async Task YukleniyorProjeler()
+    {
+        projelerYukleniyor = true;
+        StateHasChanged();
+
+        try
+        {
+            projeler = await ImageApi.GetUserProjects(kullaniciId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Proje yükleme hatası: {ex.Message}");
+            projeler = new List<CreateImageSetResponseDto>();
+        }
+        finally
+        {
+            projelerYukleniyor = false;
+            StateHasChanged();
+        }
+    }
+
+    private void ProjeAc(string paylasimKodu)
+    {
+        // YANLIŞ: NavManager.NavigateTo($"/resimler/{paylasimKodu}");
+
+        // DOĞRU: Soru işareti ve parametre ismini ekleyin
+        NavManager.NavigateTo($"/resimler?kod={paylasimKodu}");
+    }
+
+    private async Task KoduKopyala(string kod)
+    {
+        try
+        {
+            // 1. Panoya (Clipboard) kopyala
+            await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", kod);
+
+            // 2. Kullanıcıya bilgi ver (İsteğe bağlı, alert yerine toast mesajı da olabilir)
+            // Kopyalandığını anlaması için ekrana uyarı çıkarıyoruz.
+            await JSRuntime.InvokeVoidAsync("alert", $"Proje kodu kopyalandı: {kod}");
+
+            Console.WriteLine($"✅ Kod panoya kopyalandı: {kod}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Kopyalama hatası: {ex.Message}");
+            await JSRuntime.InvokeVoidAsync("alert", "Kopyalama başarısız oldu. Lütfen manuel seçip kopyalayın.");
+        }
+    }
+
+    private async Task ProjeSil(int imageSetId)
+    {
+        if (await JSRuntime.InvokeAsync<bool>("confirm", "Bu projeyi silmek istediğinize emin misiniz?"))
+        {
+            try
+            {
+                var basarili = await ImageApi.DeleteImageSet(imageSetId);
+                if (basarili)
+                {
+                    await YukleniyorProjeler(); // Listeyi yenile
+                    Console.WriteLine("✅ Proje silindi");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Silme hatası: {ex.Message}");
+            }
+        }
+    }
+}

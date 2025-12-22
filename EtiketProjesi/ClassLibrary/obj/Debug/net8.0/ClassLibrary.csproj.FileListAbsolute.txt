@@ -1,0 +1,11 @@
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\bin\Debug\net8.0\ClassLibrary.deps.json
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\bin\Debug\net8.0\ClassLibrary.dll
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\bin\Debug\net8.0\ClassLibrary.pdb
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8.0\ClassLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8.0\ClassLibrary.AssemblyInfoInputs.cache
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8.0\ClassLibrary.AssemblyInfo.cs
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8.0\ClassLibrary.csproj.CoreCompileInputs.cache
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8.0\ClassLibrary.dll
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8.0\refint\ClassLibrary.dll
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8.0\ClassLibrary.pdb
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8.0\ref\ClassLibrary.dll

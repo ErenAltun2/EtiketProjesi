@@ -1,0 +1,6 @@
+@EtiketAPI_HostAddress = http://localhost:5215
+
+GET {{EtiketAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

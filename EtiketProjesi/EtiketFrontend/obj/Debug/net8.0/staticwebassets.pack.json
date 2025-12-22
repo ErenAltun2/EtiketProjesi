@@ -1,0 +1,49 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\EtiketFrontend.bundle.scp.css",
+      "PackagePath": "staticwebassets\\EtiketFrontend.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\wwwroot\\js\\download.js",
+      "PackagePath": "staticwebassets\\js\\download.js"
+    },
+    {
+      "Id": "C:\\Users\\EXCALIBUR\\Desktop\\EtiketProje\\EtiketProjesi\\EtiketFrontend\\wwwroot\\js\\labeling.js",
+      "PackagePath": "staticwebassets\\js\\labeling.js"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.EtiketFrontend.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.EtiketFrontend.props",
+      "PackagePath": "build\\EtiketFrontend.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.EtiketFrontend.props",
+      "PackagePath": "buildMultiTargeting\\EtiketFrontend.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.EtiketFrontend.props",
+      "PackagePath": "buildTransitive\\EtiketFrontend.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

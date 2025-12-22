@@ -1,0 +1,62 @@
+﻿@inherits LayoutComponentBase
+@using EtiketFrontend.Authentication
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavManager
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4 d-flex justify-content-between align-items-center bg-white shadow-sm" style="z-index: 1;">
+
+            <div class="fw-bold text-primary">
+                🚀 YOLO Etiketleme Sistemi
+            </div>
+
+            <AuthorizeView>
+                <Authorized>
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="text-dark border-end pe-3">
+                            👤 Merhaba, <span class="fw-bold text-primary">@context.User.FindFirst("Isim")?.Value</span>
+                        </span>
+
+                        <button class="btn btn-sm btn-outline-danger d-flex align-items-center gap-2" @onclick="Logout">
+                            <span>Çıkış</span>
+                            <span class="bi bi-box-arrow-right"></span>
+                        </button>
+                    </div>
+                </Authorized>
+                <NotAuthorized>
+                    <div class="d-flex gap-2">
+                        <a href="register" class="btn btn-sm btn-light">Kayıt Ol</a>
+                        <a href="login" class="btn btn-sm btn-primary">Giriş Yap</a>
+                    </div>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+
+        <article class="content px-4 py-4 bg-light bg-opacity-25" style="min-height: 100vh;">
+            @Body
+        </article>
+    </main>
+</div>
+
+<div id="blazor-error-ui">
+    Beklenmeyen bir hata oluştu.
+    <a href="" class="reload">Yenile</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+@code {
+    private async Task Logout()
+    {
+        // Custom Auth Provider'a erişip çıkış işlemini tetikliyoruz
+        if (AuthStateProvider is CustomAuthenticationStateProvider customAuthStateProvider)
+        {
+            await customAuthStateProvider.UpdateAuthenticationState(null);
+            NavManager.NavigateTo("/login", true);
+        }
+    }
+}
