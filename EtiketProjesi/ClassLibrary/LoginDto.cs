@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
+    //bu fotografta gordugunuz kullanıcının web sayfasında gırecegı bılgıler oluyor 
     public class LoginDto
     {
         public string Email { get; set; }

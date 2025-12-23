@@ -11,14 +11,14 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-12">
-            
+
             <!-- Başlık Kartı -->
             <div class="card shadow mb-4">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">📤 Resim Yükleme</h4>
                 </div>
                 <div class="card-body">
-                    
+
                     @if (!string.IsNullOrEmpty(ErrorMessage))
                     {
                         <div class="alert alert-danger alert-dismissible fade show">
@@ -124,10 +124,11 @@
 </div>
 
 @code {
-    [SupplyParameterFromQuery]
+    [SupplyParameterFromQuery] // ID büyük/küçük harf duyarlı olabilir, garantiye alalım
     public int ImageSetId { get; set; }
 
-    [SupplyParameterFromQuery]
+    // ÖNEMLİ DÜZELTME: Name = "kod" ekliyoruz
+    [SupplyParameterFromQuery(Name = "kod")]
     public string PaylasmaKodu { get; set; } = string.Empty;
 
     private List<IBrowserFile> selectedFiles = new();
@@ -155,7 +156,7 @@
         foreach (var file in e.GetMultipleFiles(100)) // Maksimum 100 dosya
         {
             var extension = Path.GetExtension(file.Name).ToLower();
-            
+
             if (!allowedExtensions.Contains(extension))
             {
                 ErrorMessage = $"Geçersiz dosya formatı: {file.Name}. Sadece resim dosyaları yükleyebilirsiniz.";

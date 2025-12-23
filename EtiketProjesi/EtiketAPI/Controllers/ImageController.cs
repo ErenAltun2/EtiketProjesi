@@ -140,8 +140,8 @@ namespace EtiketAPI.Controllers
             // CreateImageSetResponseDto ile uyumlu yap:
             return Ok(new
             {
-                imageSetId = imageSet.Id,  // <--- "imageSetId" olarak değiştir
-                userId = imageSet.UserId,   // <--- lowercase
+                imageSetId = imageSet.Id,  
+                userId = imageSet.UserId,
                 paylasmaKodu = imageSet.paylasmKodu,
                 olusturmaTarihi = imageSet.olusturmaTarihi.ToString("yyyy-MM-dd HH:mm:ss"),
                 resimSayisi = images?.Count ?? 0

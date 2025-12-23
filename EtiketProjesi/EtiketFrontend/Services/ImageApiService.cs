@@ -1,6 +1,6 @@
 ﻿using ClassLibrary;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components.Forms; // <--- BU SATIRI EKLEMEYİ UNUTMAYIN
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace EtiketFrontend.Services
 {
@@ -13,20 +13,19 @@ namespace EtiketFrontend.Services
             _httpClient = httpClientFactory.CreateClient("ApiClient");
         }
 
-        // --- DÜZELTİLEN METOT BURASI ---
+        
         public async Task<CreateImageSetResponseDto?> CreateImageSet(CreateImageSetDto dto)
         {
             var response = await _httpClient.PostAsJsonAsync("api/Image/create-set", dto);
 
             if (response.IsSuccessStatusCode)
             {
-                // Artık dynamic (JsonElement) değil, gerçek bir sınıf dönüyoruz.
-                // Bu sayede "!= null" hatası çözülecek.
+                //aynı logindeki gibi databaseden gelen verileri daha detaylı veya istediğimiz şekilde kullanmamız için CreateImageSetResponseDto kullanıyoruz.
                 return await response.Content.ReadFromJsonAsync<CreateImageSetResponseDto>();
             }
 
             // Hata varsa null dönmek yerine hatayı fırlatmak daha iyidir,
-            // böylece ekranda neden oluşmadığını görebilirsiniz.
+            // böylece ekranda neden oluşmadığını görebiliriz.
             var errorContent = await response.Content.ReadAsStringAsync();
             throw new Exception($"Proje Oluşturma Hatası: {errorContent}");
         }
@@ -37,16 +36,51 @@ namespace EtiketFrontend.Services
             using var content = new MultipartFormDataContent();
             content.Add(new StringContent(imageSetId.ToString()), "imageSetId");
 
+            // Güvenlik için maksimum dosya boyutu (örn: 50 MB)
+            long maxFileSize = 50 * 1024 * 1024;
+
             foreach (var file in files)
             {
-                // Max dosya boyutu 10MB olarak ayarlanmış
-                var fileContent = new StreamContent(file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024));
-                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
-                content.Add(fileContent, "images", file.Name);
+                try
+                {
+                    // 1. ÖNCE RAM'E KOPYALA (Bu adım Timeout hatasını çözer)
+                    // Tarayıcıdan gelen veriyi önce sunucunun hafızasına alıyoruz.
+                    // Böylece Blazor ile tarayıcı arasındaki bağlantı (Circuit) meşgul edilmiyor.
+                    var memoryStream = new MemoryStream();
+
+                    // Stream'i kopyalarken maksimum boyutu belirtiyoruz
+                    await file.OpenReadStream(maxAllowedSize: maxFileSize).CopyToAsync(memoryStream);
+
+                    // Stream'i başa sarıyoruz ki okunabilsin
+                    memoryStream.Position = 0;
+
+                    // 2. HTTP İÇERİĞİNİ HAZIRLA
+                    // Artık StreamContent, tarayıcıyı beklemiyor, doğrudan RAM'den okuyor.
+                    var fileContent = new StreamContent(memoryStream);
+                    fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+
+                    content.Add(fileContent, "images", file.Name);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"❌ Dosya işleme hatası ({file.Name}): {ex.Message}");
+                    // Hata olsa bile diğer dosyaları denemeye devam etsin mi? 
+                    // Şimdilik false dönüp işlemi durduruyoruz.
+                    return false;
+                }
             }
 
-            var response = await _httpClient.PostAsync("api/Image/upload", content);
-            return response.IsSuccessStatusCode;
+            try
+            {
+                // 3. API'YE GÖNDER
+                var response = await _httpClient.PostAsync("api/Image/upload", content);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ API Bağlantı Hatası: {ex.Message}");
+                return false;
+            }
         }
 
         // Şimdilik diğerleri dynamic kalabilir ama ileride onları da DTO yapmanız önerilir.

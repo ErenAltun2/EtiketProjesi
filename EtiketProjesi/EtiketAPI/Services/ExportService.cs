@@ -32,7 +32,7 @@ namespace EtiketAPI.Services
                 .Where(i => i.ImageSetId == imageSet.Id)
                 .ToListAsync();
 
-            if (!images.Any())
+            if (!images.Any())  //hiç resim var mı dıye bakıyor yoksa  soruyu soyle soruyor imagesden hiç var mı yok dıyıp false donduruyor basına koydugum ! ile de true yapıp null donduruyoruz
                 return null;
 
             // 3. Tüm etiket isimlerini topla ve ID ver

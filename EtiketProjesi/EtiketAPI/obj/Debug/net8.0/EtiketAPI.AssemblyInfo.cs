@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EtiketAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+25b9e299a6a042dad5895109cf2dc36e384b74c3")]
 [assembly: System.Reflection.AssemblyProductAttribute("EtiketAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EtiketAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

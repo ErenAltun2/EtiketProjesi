@@ -9,3 +9,4 @@ C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8
 C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8.0\refint\ClassLibrary.dll
 C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8.0\ClassLibrary.pdb
 C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8.0\ref\ClassLibrary.dll
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\ClassLibrary\obj\Debug\net8.0\ClassLibrary.sourcelink.json

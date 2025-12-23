@@ -167,3 +167,4 @@ C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\EtiketFrontend\obj\Debug\ne
 C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\EtiketFrontend\obj\Debug\net8.0\EtiketFr.81D773D0.Up2Date
 C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\EtiketFrontend\bin\Debug\net8.0\ClassLibrary.dll
 C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\EtiketFrontend\bin\Debug\net8.0\ClassLibrary.pdb
+C:\Users\EXCALIBUR\Desktop\EtiketProje\EtiketProjesi\EtiketFrontend\obj\Debug\net8.0\EtiketFrontend.sourcelink.json

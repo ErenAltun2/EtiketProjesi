@@ -22,7 +22,7 @@ namespace EtiketAPI.Services
             do
             {
                 Random random = new Random();
-                kod = random.Next(10000, 999999).ToString();   //6 hanelı kod uretecegım burada
+                kod = random.Next(100000, 999999).ToString();   //6 hanelı kod uretecegım burada
                                                                // bu kod daha once kullanılmıs mı kontrol edecegiz 
                 KodVarmı = await _context.ImageSets.AnyAsync(x => x.paylasmKodu == kod);
             }

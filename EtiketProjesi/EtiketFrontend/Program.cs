@@ -9,7 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+    .AddInteractiveServerComponents()
+    .AddHubOptions(options =>
+    {
+        // Dosya yüklerken baðlantýnýn kopmamasý için süreyi 5 dakikaya çýkarýyoruz
+        options.ClientTimeoutInterval = TimeSpan.FromMinutes(5);
+        options.HandshakeTimeout = TimeSpan.FromMinutes(2);
+
+        // Büyük resimlerin geçebilmesi için boyut sýnýrýný 100 MB yapýyoruz
+        options.MaximumReceiveMessageSize = 100 * 1024 * 1024;
+    });
 
 builder.Services.AddHttpClient("ApiClient", client =>
 {

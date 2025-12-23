@@ -186,13 +186,11 @@
     [SupplyParameterFromQuery]
     public int? ImageId { get; set; }
 
-    // Listeler ve Modeller (DTO)
+    // Listeler ve Modeller
     private List<ImageResponseDto> images = new();
     private ImageResponseDto? currentImage = null;
     private int currentImageId = 0;
-
     private List<EtiketResponseDto> currentImageLabels = new();
-
     private string currentLabel = string.Empty;
     private bool isDrawing = false;
     private string ErrorMessage = string.Empty;
@@ -201,6 +199,7 @@
     private ElementReference canvasElement;
     private ElementReference imageElement;
 
+    // 1. ADIM: OnInitializedAsync sadece kullanıcı bilgisini alsın
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthStateProvider.GetAuthenticationStateAsync();
@@ -209,34 +208,54 @@
         {
             currentUserId = int.Parse(userIdClaim);
         }
+        // LoadImages BURADAN KALDIRILDI
+    }
 
-        await LoadImages();
+    // 2. ADIM: Resimleri yüklemek için en güvenli yer burasıdır
+    protected override async Task OnParametersSetAsync()
+    {
+        // Kod dolu mu ve resimler henüz yüklenmedi mi?
+        if (!string.IsNullOrWhiteSpace(PaylasmaKodu) && (images == null || !images.Any()))
+        {
+            await LoadImages();
+        }
     }
 
     private async Task LoadImages()
     {
         try
         {
+            // Konsola bilgi yazdıralım (Tarayıcı F12 konsolunda görünür)
+            Console.WriteLine($"Resimler getiriliyor... Kod: {PaylasmaKodu}");
+
             var result = await ImageApi.GetImagesByCode(PaylasmaKodu);
 
-            if (result != null && result.resimler != null)
+            if (result != null && result.resimler != null && result.resimler.Any())
             {
                 images = result.resimler;
 
+                // Eğer URL'de özel bir ImageId varsa onu seç, yoksa ilkini seç
                 if (ImageId.HasValue && ImageId.Value > 0)
                 {
                     await SelectImage(ImageId.Value);
                 }
-                else if (images.Any())
+                else
                 {
                     await SelectImage(images.First().Id);
                 }
+            }
+            else
+            {
+                ErrorMessage = "Bu projeye ait resim bulunamadı.";
             }
         }
         catch (Exception ex)
         {
             ErrorMessage = $"Resimler yüklenemedi: {ex.Message}";
         }
+
+        // 3. ADIM: Ekranı zorla yenile
+        StateHasChanged();
     }
 
     private async Task SelectImage(int imageId)
@@ -249,13 +268,18 @@
         {
             await LoadLabelsForCurrentImage();
 
-            // ÖNEMLİ: DOM'un güncellenmesi için minik bir bekleme
-            // Bu sayede resim yüklenir ve Canvas doğru boyutu alır.
+            // DOM güncellemesi için bekleme
             await Task.Delay(50);
+
             await InitializeCanvas();
             await DrawExistingLabels();
         }
+        // Seçim yapıldığında da ekranı yenile
+        StateHasChanged();
     }
+
+    // ... KODUN GERİ KALANI (LoadLabelsForCurrentImage ve sonrası) AYNI KALACAK ...
+    // Buradan sonraki fonksiyonları (InitializeCanvas, StartDrawing vb.) değiştirmeyin.
 
     private async Task LoadLabelsForCurrentImage()
     {
@@ -277,11 +301,12 @@
         }
     }
 
+    // ... InitializeCanvas, StartDrawing, SaveLabel, DeleteLabel, DrawExistingLabels, NextImage, PreviousImage vb. buraya gelecek ...
+
     private async Task InitializeCanvas()
     {
         try
         {
-            // JS fonksiyonunu çağırır (labeling.js dosyasında initCanvas olmalı)
             await JS.InvokeVoidAsync("initCanvas");
         }
         catch (Exception ex)
@@ -300,12 +325,9 @@
 
         ErrorMessage = string.Empty;
         isDrawing = true;
-
         try
         {
-            // JS'deki startDrawing fonksiyonunu çağırır ve koordinat string'i bekler
             var result = await JS.InvokeAsync<string>("startDrawing");
-
             if (!string.IsNullOrEmpty(result))
             {
                 var coords = result.Split(',');
@@ -322,15 +344,11 @@
         }
         catch (Exception ex)
         {
-            // Kullanıcı çizimi iptal ederse veya hata olursa
-            Console.WriteLine($"Çizim iptal veya hata: {ex.Message}");
+            Console.WriteLine($"Çizim hatası: {ex.Message}");
             isDrawing = false;
         }
         finally
         {
-            // isDrawing burada false yapılmaz, SaveLabel içinde veya hata durumunda yapılır
-            // Ancak JS tarafı promise döndüğü için çizim bitene kadar burası beklemezse UI kilitlenebilir.
-            // Bizim senaryomuzda JS tarafı çizim bitince string dönüyor, o yüzden sorun yok.
             isDrawing = false;
         }
     }
@@ -349,14 +367,12 @@
                     Width = width,
                     Height = height
                 };
-
             var result = await EtiketApi.EtiketEkle(dto);
 
             if (result != null)
             {
                 await LoadLabelsForCurrentImage();
                 await DrawExistingLabels();
-                // currentLabel = string.Empty; // İsterseniz etiket adını temizleyebilirsiniz, seri üretim için temizlememek daha iyi.
             }
         }
         catch (Exception ex)

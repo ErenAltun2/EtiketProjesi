@@ -13,18 +13,14 @@ namespace EtiketFrontend.Services
             _httpClient = httpClientFactory.CreateClient("ApiClient");
         }
 
-        // Register yine dynamic kalabilir ama Login kesinlikle model dönmeli
-        // using ClassLibrary; eklemeyi unutmayın
-
         public async Task<RegisterResponseDto?> Register(RegisterDto dto)
         {
-            // API Adresiniz farklı olabilir (örn: api/Auth/register), kontrol edin
+            
             var response = await _httpClient.PostAsJsonAsync("api/User/register", dto);
 
             if (response.IsSuccessStatusCode)
             {
-                // ARTIK DYNAMIC DEĞİL, DTO DÖNÜYORUZ
-                // Bu sayede "!= null" hatası düzelir.
+                
                 return await response.Content.ReadFromJsonAsync<RegisterResponseDto>();
             }
 
@@ -33,15 +29,14 @@ namespace EtiketFrontend.Services
             throw new Exception($"Kayıt Hatası: {error}");
         }
 
-        // --- DÜZELTİLEN KISIM BURASI ---
-        // Artık 'dynamic' yerine 'UserSession' döndürüyoruz.
+        
         public async Task<LoginResponseDto?> Login(LoginDto dto)
         {
             var response = await _httpClient.PostAsJsonAsync("api/User/login", dto);
 
             if (response.IsSuccessStatusCode)
             {
-                // API'den gelen veriyi artık hatasız okuyacak, çünkü DTO tipleri uyuşuyor (int userId)
+                // API'den gelen veriyi dediğimiz gibi response olan karşılayacak ve kullanıcı bilgilerini detaylı öğrenmiş oluyoruz.
                 return await response.Content.ReadFromJsonAsync<LoginResponseDto>();
             }
 
