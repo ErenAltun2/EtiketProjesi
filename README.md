@@ -194,7 +194,7 @@ Bu proje MIT lisansı altında lisanslanmıştır.
 
 ## 👨‍💻 Geliştirici
 
-**[Senin Adın]**
+**[Eren Altun]**
 - GitHub: [@ErenAltun2](https://github.com/ErenAltun2)
 - Email: eren.alltun@gmail.com
 
