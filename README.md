@@ -1,209 +1,103 @@
-# 🏷️ Etiket - Image Labeling Platform
+# 🏷️ YOLO Etiket - Web Tabanlı Görsel Etiketleme & Veri Seti Platformu
 
-Modern ve kullanıcı dostu bir görsel etiketleme (image annotation) platformu. YOLO formatında veri seti oluşturmak için geliştirilmiştir.
+![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4?style=flat&logo=dotnet)
+![Blazor Server](https://img.shields.io/badge/Blazor-Server-512BD4?style=flat&logo=blazor)
+![YOLO](https://img.shields.io/badge/YOLO-Dataset%20Exporter-00FFFF?style=flat)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
-## 📋 Özellikler
-
-- ✅ **Kullanıcı Yönetimi**: Kayıt olma ve giriş yapma sistemi
-- ✅ **Klasör Oluşturma**: Her proje için özel klasör oluşturma
-- ✅ **Resim Yükleme**: Çoklu resim yükleme desteği
-- ✅ **Paylaşım Kodu**: 6 haneli kod ile proje paylaşımı
-- ✅ **Görsel Etiketleme**: Bounding box ile nesne etiketleme
-- ✅ **YOLO Export**: Etiketlenmiş veriyi YOLO formatında indirme
-- ✅ **Real-time Collaboration**: Ekip arkadaşlarınla aynı veri seti üzerinde çalışma
-
-## 🛠️ Teknolojiler
-
-### Backend
-- **ASP.NET Core Web API** (.NET 8)
-- **Entity Framework Core** (Code First)
-- **SQL Server** / PostgreSQL / MySQL
-
-### Frontend
-- **Blazor Web App** (Interactive Server Mode)
-- **C#** (Razor Components)
-- **Bootstrap** / Tailwind CSS
-
-### Shared
-- **Class Library** (DTO'lar ve ortak modeller)
-
-## 📁 Proje Yapısı
-
-```
-EtiketAPI/
-├── Controllers/           # API endpoint'leri
-│   ├── UserController.cs
-│   ├── ImageController.cs
-│   ├── EtiketController.cs
-│   └── ExportController.cs
-├── Services/             # Business logic
-├── Data/                 # DbContext ve migrations
-└── Program.cs
-
-EtiketBlazor/
-├── Services/             # API çağrıları için servisler
-│   ├── AuthService.cs
-│   ├── ImageService.cs
-│   ├── EtiketService.cs
-│   └── ExportService.cs
-├── Pages/                # Razor sayfaları
-├── Components/           # Yeniden kullanılabilir bileşenler
-└── Program.cs
-
-Shared/ClassLibrary/
-├── DTOs/                 # Veri transfer objeleri
-└── Models/               # Ortak modeller
-```
-
-## 🚀 Kurulum
-
-### 1. Gereksinimler
-- .NET 8 SDK
-- SQL Server / PostgreSQL / MySQL
-- Visual Studio 2022 veya VS Code
-
-### 2. Veritabanı Kurulumu
-
-```bash
-# API projesine git
-cd EtiketAPI
-
-# Connection string'i appsettings.json'da düzenle
-# Migrations oluştur
-dotnet ef migrations add InitialCreate
-
-# Veritabanını oluştur
-dotnet ef database update
-```
-
-### 3. API'yi Çalıştır
-
-```bash
-cd EtiketAPI
-dotnet run
-```
-
-API varsayılan olarak `https://localhost:7020` adresinde çalışacaktır.
-
-### 4. Blazor Frontend'i Çalıştır
-
-```bash
-cd EtiketBlazor
-dotnet run
-```
-
-Frontend varsayılan olarak `https://localhost:5001` adresinde çalışacaktır.
-
-## 📖 Kullanım
-
-### 1. Kayıt Ol ve Giriş Yap
-- Sisteme kayıt olun
-- Email ve şifrenizle giriş yapın
-
-### 2. Klasör Oluştur
-- "Yeni Klasör Oluştur" butonuna tıklayın
-- Sistem size 6 haneli bir paylaşım kodu verecek
-- Bu kodu not edin!
-
-### 3. Resim Yükle
-- Oluşturduğunuz klasöre birden fazla resim yükleyin
-- Desteklenen formatlar: JPG, JPEG, PNG, GIF, BMP
-
-### 4. Etiketle
-- Resimlerin üzerine bounding box çizin
-- Her nesneye etiket (label) verin
-- Örnek: "drone", "uçak", "araba"
-
-### 5. Paylaş
-- Paylaşım kodunu arkadaşlarınıza gönderin
-- Onlar da aynı veri seti üzerinde etiketleme yapabilir
-
-### 6. Export Et
-- "YOLO Export" butonuna tıklayın
-- Etiketlenmiş veri setinizi ZIP olarak indirin
-- Direkt olarak YOLOv5/YOLOv8 ile kullanabilirsiniz
-
-## 🔧 API Endpoints
-
-### User
-```
-POST   /api/user/register     # Kayıt ol
-POST   /api/user/login        # Giriş yap
-GET    /api/user/all          # Tüm kullanıcılar
-DELETE /api/user/{id}         # Kullanıcı sil
-```
-
-### Image
-```
-POST   /api/image/create-set              # Klasör oluştur
-POST   /api/image/upload                  # Resim yükle
-GET    /api/image/kod/{paylasmaKodu}      # Kod ile resimleri getir
-GET    /api/image/{imageId}               # ID ile resim getir
-GET    /api/image/set-info/{paylasimKodu} # Klasör bilgisi
-```
-
-### Etiket
-```
-POST   /api/etiket/ekle              # Etiket ekle
-GET    /api/etiket/image/{imageId}   # Resme ait etiketler
-GET    /api/etiket/code/{kod}        # Koda ait etiketler
-DELETE /api/etiket/{etiketId}        # Etiket sil
-```
-
-### Export
-```
-GET    /api/export/yolo/{paylasimKodu}  # YOLO formatında indir
-```
-
-## 🎯 YOLO Format
-
-Export edilen ZIP dosyası şu yapıya sahiptir:
-
-```
-dataset_ABC123.zip
-├── images/
-│   ├── image1.jpg
-│   ├── image2.jpg
-│   └── ...
-├── labels/
-│   ├── image1.txt
-│   ├── image2.txt
-│   └── ...
-├── data.yaml
-└── classes.txt
-```
-
-Her `.txt` dosyası YOLO formatında:
-```
-0 0.5 0.5 0.3 0.2
-1 0.7 0.3 0.15 0.1
-```
-Format: `class_id x_center y_center width height` (0-1 normalize edilmiş)
-
-## 🤝 Katkıda Bulunma
-
-1. Bu repo'yu fork edin
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'feat: Add amazing feature'`)
-4. Branch'inizi push edin (`git push origin feature/amazing-feature`)
-5. Pull Request açın
-
-## 📝 Lisans
-
-Bu proje MIT lisansı altında lisanslanmıştır.
-
-## 👨‍💻 Geliştirici
-
-**[Eren Altun]**
-- GitHub: [@ErenAltun2](https://github.com/ErenAltun2)
-- Email: eren.alltun@gmail.com
-
-## 🙏 Teşekkürler
-
-- YOLOv5 ve YOLOv8 topluluğuna
-- Microsoft Blazor ekibine
-- Tüm katkıda bulunanlara
+**YOLO Etiket**, bilgisayarlı görü (Computer Vision) projeleriniz için tarayıcı üzerinden hızlı, sezgisel ve ekiplerle paylaşımlı olarak YOLO formatında veri setleri oluşturmanızı sağlayan modern bir görsel etiketleme (image annotation) platformudur.
 
 ---
 
-⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!
+## 📸 Ekran Görüntüleri (UI Showcase)
+
+### 1. Karşılama ve Kullanıcı Yönetimi
+Kullanıcılar sisteme hızlıca kayıt olabilir, giriş yapabilir ve kişisel çalışma paneline erişebilir.
+
+| Kayıt Ol (Register) | Giriş Yap (Login) | Kullanıcı Kontrol Paneli |
+| :---: | :---: | :---: |
+| <img src="docs/images/register-page.jpg" width="300" /> | <img src="docs/images/login-page.jpg" width="300" /> | <img src="docs/images/homepage-2.jpg" width="300" /> |
+
+---
+
+### 2. Proje Yönetimi & Kod ile İş Birliği
+Her etiketleme oturumu için benzersiz bir **6 haneli paylaşım kodu** üretilir. Ekip üyeleri bu kodu girerek projeye anında dahil olabilir.
+
+| Yeni Proje Oluşturma | Projelerim & Kod Paylaşımı | Kod ile Projeye Katılma |
+| :---: | :---: | :---: |
+| <img src="docs/images/new-project.jpg" width="300" /> | <img src="docs/images/homepage-3.jpg" width="300" /> | <img src="docs/images/loginwithcode.jpg" width="300" /> |
+
+---
+
+### 3. Çoklu Görsel Yükleme ve Etiketleme Arayüzü
+Görseller toplu olarak yüklendikten sonra dinamik kanvas üzerinde nesneler işaretlenir ve etiket koordinatları anlık olarak listelenir.
+
+| Toplu Görsel Yükleme (Batch Upload) | İnteraktif Bounding Box Etiketleme Alanı |
+| :---: | :---: |
+| <img src="docs/images/image-upload.jpg" width="450" /> | <img src="docs/images/etiketleme.jpg" width="450" /> |
+
+---
+
+### 4. Tek Tıkla YOLO Dataset İndirme
+Etiket koordinatları otomatik normalize edilerek model eğitimine hazır (YOLOv5, YOLOv8, YOLOv11) ZIP paketi olarak sunulur.
+
+<p align="center">
+  <img src="docs/images/dataset-download.jpg" width="720" alt="YOLO Dataset Export" />
+</p>
+
+---
+
+## 🗄️ Veritabanı Mimarisi
+
+Sistem; kullanıcılar, görsel kümeleri, görseller ve koordinat verilerini ilişkisel model kurallarına uygun biçimde saklar:
+
+<p align="center">
+  <img src="docs/images/database-design.jpg" width="800" alt="Veritabanı İlişki Şeması (ER Diagram)" />
+</p>
+
+### Tablo İlişkileri:
+* **Users (1:N) ImageSets**: Bir kullanıcı birden çok proje/görsel seti oluşturabilir.
+* **ImageSets (1:N) Images**: Her görsel seti kendi içerisinde çok sayıda görsel dosyasını barındırır.
+* **Images (1:N) EtiketlenenImages**: Her görsel üzerinde birden fazla sınır kutusu (bounding box) etiketi bulunabilir.
+* **Users (1:N) EtiketlenenImages**: Hangi etiketin hangi kullanıcı tarafından işaretlendiği kaydedilir.
+
+---
+
+## 📋 Öne Çıkan Özellikler
+
+* **Kullanıcı Yönetimi**: Güvenli kayıt, giriş ve oturum takibi.
+* **6 Haneli Paylaşım Kodu**: Veri setini ekip üyeleriyle hızlıca paylaşarak senkronize etiketleme.
+* **Toplu Dosya Yükleme**: JPG, JPEG, PNG, GIF, BMP formatlarında çoklu görsel aktarımı.
+* **Dinamik Bounding Box**: Tarayıcı üzerinden gecikmesiz nesne sınır kutusu çizimi ve sınıflandırma.
+* **Normalize YOLO Koordinatları**: Anlık `(x_center, y_center, width, height)` dönüşümü.
+* **Eğitime Hazır Export Paketi**: `images/`, `labels/`, `data.yaml` ve `classes.txt` dosyalarını içeren otomatik ZIP yapısı.
+
+---
+
+## 🛠️ Teknoloji Yığını
+
+* **Backend**: ASP.NET Core Web API (.NET 8)
+* **Frontend**: Blazor Web App (Interactive Server Mode) & Razor Components
+* **Stil / Arayüz**: Bootstrap & Özel CSS
+* **ORM / Veritabanı**: Entity Framework Core (Code First) & SQL Server / PostgreSQL
+* **Mimari**: Katmanlı Mimari (API, Blazor UI ve Shared DTO Class Library)
+
+---
+
+## 📁 Çözüm & Dizin Yapısı
+
+```text
+EtiketSolution/
+├── EtiketAPI/                 # RESTful Web API Katmanı
+│   ├── Controllers/           # UserController, ImageController, EtiketController, ExportController
+│   ├── Services/              # İş mantığı, dosya işleme ve export servisleri
+│   ├── Data/                  # DbContext ve Migration dosyaları
+│   └── Program.cs
+├── EtiketBlazor/              # Blazor Web App (İstemci Katmanı)
+│   ├── Pages/                 # Proje, Etiketleme, Galeri, Export Razor sayfaları
+│   ├── Components/            # Bounding Box çizim ve interaktif bileşenler
+│   ├── Services/              # Backend API haberleşme servisleri
+│   └── Program.cs
+└── Shared/ClassLibrary/       # Paylaşılan Tipler
+    ├── DTOs/                  # Request & Response Veri Transfer Nesneleri
+    └── Models/                # Ortak varlık modelleri
