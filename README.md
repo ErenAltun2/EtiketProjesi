@@ -16,7 +16,7 @@ Kullanıcılar sisteme hızlıca kayıt olabilir, giriş yapabilir ve kişisel �
 
 | Kayıt Ol (Register) | Giriş Yap (Login) | Kullanıcı Kontrol Paneli |
 | :---: | :---: | :---: |
-| <img src="images/register-page.jpg" width="300" /> | <img src="docs/images/login-page.jpg" width="300" /> | <img src="docs/images/homepage-2.jpg" width="300" /> |
+| <img src="images/register-page.jpg" width="300" /> | <img src="images/login-page.jpg" width="300" /> | <img src="images/homepage-2.jpg" width="300" /> |
 
 ---
 
@@ -25,7 +25,7 @@ Her etiketleme oturumu için benzersiz bir **6 haneli paylaşım kodu** üretili
 
 | Yeni Proje Oluşturma | Projelerim & Kod Paylaşımı | Kod ile Projeye Katılma |
 | :---: | :---: | :---: |
-| <img src="docs/images/new-project.jpg" width="300" /> | <img src="docs/images/homepage-3.jpg" width="300" /> | <img src="docs/images/loginwithcode.jpg" width="300" /> |
+| <img src="images/new-project.jpg" width="300" /> | <img src="images/homepage-3.jpg" width="300" /> | <img src="images/loginwithcode.jpg" width="300" /> |
 
 ---
 
@@ -34,7 +34,7 @@ Görseller toplu olarak yüklendikten sonra dinamik kanvas üzerinde nesneler i�
 
 | Toplu Görsel Yükleme (Batch Upload) | İnteraktif Bounding Box Etiketleme Alanı |
 | :---: | :---: |
-| <img src="docs/images/image-upload.jpg" width="450" /> | <img src="docs/images/etiketleme.jpg" width="450" /> |
+| <img src="images/image-upload.jpg" width="450" /> | <img src="images/etiketleme.jpg" width="450" /> |
 
 ---
 
@@ -42,7 +42,7 @@ Görseller toplu olarak yüklendikten sonra dinamik kanvas üzerinde nesneler i�
 Etiket koordinatları otomatik normalize edilerek model eğitimine hazır (YOLOv5, YOLOv8, YOLOv11) ZIP paketi olarak sunulur.
 
 <p align="center">
-  <img src="docs/images/dataset-download.jpg" width="720" alt="YOLO Dataset Export" />
+  <img src="images/dataset-download.jpg" width="720" alt="YOLO Dataset Export" />
 </p>
 
 ---
@@ -52,7 +52,7 @@ Etiket koordinatları otomatik normalize edilerek model eğitimine hazır (YOLOv
 Sistem; kullanıcılar, görsel kümeleri, görseller ve koordinat verilerini ilişkisel model kurallarına uygun biçimde saklar:
 
 <p align="center">
-  <img src="docs/images/database-design.jpg" width="800" alt="Veritabanı İlişki Şeması (ER Diagram)" />
+  <img src="images/database-design.jpg" width="800" alt="Veritabanı İlişki Şeması (ER Diagram)" />
 </p>
 
 ### Tablo İlişkileri:
