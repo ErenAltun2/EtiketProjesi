@@ -16,7 +16,7 @@ Kullanıcılar sisteme hızlıca kayıt olabilir, giriş yapabilir ve kişisel �
 
 | Kayıt Ol (Register) | Giriş Yap (Login) | Kullanıcı Kontrol Paneli |
 | :---: | :---: | :---: |
-| <img src="docs/images/register-page.jpg" width="300" /> | <img src="docs/images/login-page.jpg" width="300" /> | <img src="docs/images/homepage-2.jpg" width="300" /> |
+| <img src="images/register-page.jpg" width="300" /> | <img src="docs/images/login-page.jpg" width="300" /> | <img src="docs/images/homepage-2.jpg" width="300" /> |
 
 ---
 
